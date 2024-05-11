@@ -9,13 +9,8 @@ export default function Home() {
 
     <div >
       <div className="relative">
-        <AspectRatio ratio={16 / 9} className='h-screen flex flex-col justify-center items-center space-y-4'>
-
-
-
-          <div className="landing-bg h-full w-full absolute z-0 blur-md " />
-
-
+        <AspectRatio ratio={16 / 10} className='h-screen flex flex-col justify-center items-center space-y-4 overflow-hidden'>
+          <div className="landing-bg h-full w-full absolute z-0  scale-125 " />
           <div className="relative z-10 w-full h-screen">
             <Container>
               <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
