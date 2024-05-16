@@ -7,7 +7,7 @@ import { validateRequest } from '@/auth'
 
 const page = async ({ params }: {
     params: {
-        userId: string
+        userId: string,
     }
 }) => {
 
@@ -25,8 +25,15 @@ const page = async ({ params }: {
     const getUserBio = getUser?.bio || null
     const getUserImage = getUser?.image || null
     const getUserDate = getUser?.createdAt.toDateString() || null
+    const getUserType = getUser?.type || null
 
     const getArtworks = await db.artwork.findMany({
+        where: {
+            userId: params.userId
+        }
+    })
+
+    const getService = await db.services.findFirst({
         where: {
             userId: params.userId
         }
@@ -52,7 +59,10 @@ const page = async ({ params }: {
                         image={getUserImage}
                         artworks={getArtworks}
                         services={getServices}
-                        initialData={getUser}
+                        userType={getUserType}
+                        userData={getUser}
+
+                        servicesData={getService}
                     />
                 </Container>
             </div>
