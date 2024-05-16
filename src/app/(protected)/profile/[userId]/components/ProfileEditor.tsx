@@ -14,19 +14,19 @@ import { User } from '@prisma/client'
 import { Input } from '@/components/ui/input'
 
 interface ProfileEditorProps {
-    initialData: User | null
+    userData: User | null
 }
 
-const ProfileEditor: FC<ProfileEditorProps> = ({ initialData }) => {
+const ProfileEditor: FC<ProfileEditorProps> = ({ userData }) => {
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false) // State to control the dialog
 
     const form = useForm<z.infer<typeof userSettingsSchema>>({
         resolver: zodResolver(userSettingsSchema),
-        defaultValues: initialData ? {
-            name: initialData.name || '',
-            username: initialData.username || '',
-            bio: initialData.bio || '',
+        defaultValues: userData ? {
+            name: userData.name || '',
+            username: userData.username || '',
+            bio: userData.bio || '',
             password: '',
             newPassword: ''
         } : {
@@ -57,7 +57,7 @@ const ProfileEditor: FC<ProfileEditorProps> = ({ initialData }) => {
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger className='px-4 py-1 rounded-full bg-[#8889DA]'>
+            <DialogTrigger className='px-4 py-2 rounded-full bg-[#8889DA]'>
                 Edit Profile
             </DialogTrigger>
             <DialogContent>
