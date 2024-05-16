@@ -65,6 +65,8 @@ model Services {
   id String @id @default(cuid())
 
   name String
+  description String
+  startingPrice Float
   artworks Artwork[]
   
   userId String
