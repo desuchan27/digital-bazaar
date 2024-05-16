@@ -9,7 +9,7 @@ const ContentSection: FC<ContentSectionProps> = ({
     children
 }) => {
     return (
-        <div className='w-full h-[700px] rounded-sm bg-[#1E1F57] overflow-auto px-6 py-6'>{children}</div>
+        <div className='w-full h-[400px] rounded-sm bg-[#1E1F57] overflow-auto px-6 py-6'>{children}</div>
     )
 }
 
