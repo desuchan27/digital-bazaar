@@ -51,3 +51,16 @@ export const bioFormSchema = z.object({
 export const avatarFormSchema = z.object({
     imageUrl: z.string()
 })
+
+export const serviceFormSchema = z.object({
+    name: z.string().min(1, {
+        message: 'Title is required'
+    }),
+    description: z.string().min(1, {
+        message: 'Description is required'
+    }),
+    imageUrl: z.string().min(1, {
+        message: 'Image is required'
+    }),
+    startingPrice: z.coerce.number().min(1),
+})
