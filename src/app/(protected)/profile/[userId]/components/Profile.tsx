@@ -79,13 +79,12 @@ const Profile: FC<ProfileProps> = ({
                             </div>
                         }
                         <div >
-                            {isCurrentUser && session && bio && bio.length >= 1 ? (<p>{bio}</p>) : (isCurrentUser ? <BioEditor /> : null)}
+                            {isCurrentUser && session && bio && bio.length > 0 ? (<p>{bio}</p>) : (isCurrentUser ? <BioEditor /> : null)}
                         </div>
-
 
                         <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
                             <div className='overflow-x-auto'>
-                                <p>Artworks: {artworks >= 1 ? <span>artworks</span> : 'None'}</p>
+                                <p>Artworks: {artworks > 0 ? <span>artworks</span> : 'None'}</p>
                             </div>
 
                             <div className='overflow-x-auto'>
