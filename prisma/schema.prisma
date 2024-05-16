@@ -67,6 +67,8 @@ model Services {
   name String
   description String
   startingPrice Float
+  thumbnail String
+  
   artworks Artwork[]
   
   userId String
