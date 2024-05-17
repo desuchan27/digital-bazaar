@@ -66,15 +66,15 @@ const ArtworkForm: FC<ArtworkFormProps> = ({
                     <PencilIcon className='mr-2' size={20} />Post Artwork
                 </p>
             </DialogTrigger>
-            <DialogContent className='xl:max-w-4xl overflow-auto'>
+            <DialogContent className='md:max-w-4xl overflow-auto'>
                 <DialogHeader>New Artwork</DialogHeader>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className='space-y-4'
                     >
-                        <div className="flex flex-col xl:flex-row items-center justify-center gap-4">
-                            <div className="space-y-4 w-full xl:w-2/5 h-full flex flex-col justify-center items-center overflow-hidden rounded-sm">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                            <div className="space-y-4 w-full md:w-2/5 h-full flex flex-col justify-center items-center overflow-hidden rounded-sm">
                                 <div className='relative w-full h-[250px] overflow-hidden rounded-sm'>
                                     {uploadedFileName ? (
                                         <Image
@@ -121,7 +121,7 @@ const ArtworkForm: FC<ArtworkFormProps> = ({
                                     }}
                                 />
                             </div>
-                            <div className="space-y-4 w-full xl:w-3/5">
+                            <div className="space-y-4 w-full md:w-3/5">
                                 <FormField
                                     control={form.control}
                                     name='title'
