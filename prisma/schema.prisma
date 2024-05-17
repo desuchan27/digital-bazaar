@@ -49,7 +49,7 @@ model Artwork {
   id          String   @id @default(cuid())
   title       String
   description String
-  imageUrl    String[]
+  imageUrl    String
   startingPrice Float
 
   user        User     @relation(fields: [userId], references: [id])
