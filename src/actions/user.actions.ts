@@ -1,7 +1,7 @@
 "use server"
 
 import * as z from 'zod';
-import { avatarFormSchema, bioFormSchema, serviceFormSchema, userSettingsSchema } from "@/schema";
+import { artworkFormSchema, avatarFormSchema, bioFormSchema, serviceFormSchema, userSettingsSchema } from "@/schema";
 import { db } from '@/lib/db';
 import { validateRequest } from '@/auth';
 
@@ -107,6 +107,48 @@ export const addService = async (values: z.infer<typeof serviceFormSchema>) => {
         })
         return {
             success: 'Service added successfully'
+        }
+    }
+}
+
+export const addArtwork = async (values: z.infer<typeof artworkFormSchema>) => {
+
+    const { title, serviceId, description, imageUrl, startingPrice } = values
+    const session = await validateRequest()
+
+    const sessionId = session.user?.id
+
+
+    const existingUser = await db.user.findFirst({
+        where: {
+            id: sessionId
+        }
+    })
+
+    const existingService = await db.services.findFirst({
+        where: {
+            id: serviceId
+        }
+    })
+
+    if (!existingUser || !existingService) {
+        return {
+            error: 'Unauthorized'
+        }
+
+    } else {
+        await db.artwork.create({
+            data: {
+                title: title,
+                serviceId,
+                startingPrice,
+                description: description,
+                imageUrl: imageUrl,
+                userId: existingUser.id,
+            }
+        })
+        return {
+            success: 'Artwork added successfully'
         }
     }
 }
