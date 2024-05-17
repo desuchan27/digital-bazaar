@@ -61,7 +61,6 @@ const page = async ({ params }: {
                         services={getServices}
                         userType={getUserType}
                         userData={getUser}
-
                         servicesData={getService}
                     />
                 </Container>
