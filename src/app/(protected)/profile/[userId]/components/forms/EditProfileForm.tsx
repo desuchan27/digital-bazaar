@@ -12,6 +12,7 @@ import { editProfile } from '@/actions/user.actions'
 import toast from 'react-hot-toast'
 import { User } from '@prisma/client'
 import { Input } from '@/components/ui/input'
+import { EditIcon } from 'lucide-react'
 
 interface EditProfileFormProps {
     userData: User | null
@@ -58,7 +59,9 @@ const EditProfileForm: FC<EditProfileFormProps> = ({ userData }) => {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger className='px-4 py-2 rounded-full bg-[#8889DA]'>
-                Edit Profile
+                <p className="flex flex-row justify-center items-center">
+                    <EditIcon className='mr-2' size={20} />Edit Profile
+                </p>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>Edit Profile</DialogHeader>
