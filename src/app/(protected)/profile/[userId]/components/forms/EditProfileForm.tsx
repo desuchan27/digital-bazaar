@@ -13,11 +13,11 @@ import toast from 'react-hot-toast'
 import { User } from '@prisma/client'
 import { Input } from '@/components/ui/input'
 
-interface ProfileEditorProps {
+interface EditProfileFormProps {
     userData: User | null
 }
 
-const ProfileEditor: FC<ProfileEditorProps> = ({ userData }) => {
+const EditProfileForm: FC<EditProfileFormProps> = ({ userData }) => {
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false) // State to control the dialog
 
@@ -156,4 +156,4 @@ const ProfileEditor: FC<ProfileEditorProps> = ({ userData }) => {
     )
 }
 
-export default ProfileEditor
+export default EditProfileForm

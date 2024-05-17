@@ -14,11 +14,11 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
 
-interface BioEditorProps {
+interface EditBioFormProps {
 
 }
 
-const BioEditor: FC<BioEditorProps> = ({ }) => {
+const EditBioForm: FC<EditBioFormProps> = ({ }) => {
 
     const router = useRouter()
 
@@ -90,4 +90,4 @@ const BioEditor: FC<BioEditorProps> = ({ }) => {
     )
 }
 
-export default BioEditor
+export default EditBioForm
