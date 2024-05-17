@@ -64,3 +64,22 @@ export const serviceFormSchema = z.object({
     }),
     startingPrice: z.coerce.number().min(1),
 })
+
+export const artworkFormSchema = z.object({
+    title: z.string().min(1, {
+        message: 'Title is required'
+
+    }),
+    serviceId: z.string().min(1, {
+        message: 'Service is required'
+    }),
+    description: z.string().min(1, {
+        message: 'Description is required'
+    }),
+    imageUrl: z.string().min(1, {
+        message: 'Image is required'
+    }),
+    startingPrice: z.coerce.number().min(1, {
+        message: 'Price is required'
+    }),
+})
