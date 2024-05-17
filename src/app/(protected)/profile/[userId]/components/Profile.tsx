@@ -4,7 +4,7 @@ import ProfileSection from '@/components/layouts/web/ProfileSection'
 import ContentSection from '@/components/layouts/web/ContentSection'
 import { Button } from '@/components/ui/button'
 import { useSession } from '@/lib/auth/SessionContext'
-import { Services, User } from '@prisma/client'
+import { Artwork, Services, User } from '@prisma/client'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
@@ -14,6 +14,7 @@ import { Edit, User as UserIcon } from 'lucide-react'
 import EditProfileForm from './forms/EditProfileForm'
 import ServiceForm from './forms/ServiceForm'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import ArtworkForm from './forms/ArtworkForm'
 
 interface ProfileProps {
     name: string | null
@@ -97,7 +98,7 @@ const Profile: FC<ProfileProps> = ({
                             session.user.type && userType === "ARTIST" ? (
                                 <div className='flex flex-row space-x-4 my-4 '>
                                     <EditProfileForm userData={userData} />
-                                    <Button className='rounded-full bg-[#8889DA]'>Post new artwork</Button>
+                                    <ArtworkForm services={services} />
                                     <ServiceForm />
                                 </div>
                             ) : (
@@ -132,9 +133,7 @@ const Profile: FC<ProfileProps> = ({
                                     <p>Joined: {session.user?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
-                        )
-
-                        }
+                        )}
 
 
                     </div>
@@ -145,17 +144,6 @@ const Profile: FC<ProfileProps> = ({
             <ContentSection>
                 <h3 className='text-2xl'>All services</h3>
 
-                {/* <div className="mt-5 grid grid-cols-1 gap-4">
-                    {services.map((service: Services) => (
-                        <div key={service.id} className='space-y-2 overflow-x-auto'>
-                            <div className='relative w-[200px] h-[200px] overflow-hidden rounded-sm'>
-                                <Image src={service.thumbnail} fill objectFit='cover' alt={service.name} />
-                            </div>
-                            <h4 className="mt-2 font-semibold">{service.name}</h4>
-                            <p className='font-extralight text-slate-400'>₱ {service.startingPrice}</p>
-                        </div>
-                    ))}
-                </div> */}
                 <Carousel
                     opts={{
                         align: "start",
@@ -183,9 +171,30 @@ const Profile: FC<ProfileProps> = ({
             {/* artworks */}
             <ContentSection>
                 <h3 className='text-2xl'>All Artworks</h3>
+
+                <Carousel
+                    opts={{
+                        align: "start",
+                    }}
+                    className="w-full max-w-5xl mx-auto mt-10"
+                >
+                    <CarouselContent>
+                        {artworks.map((artwork: Artwork) => (
+                            <CarouselItem key={artwork.id} className="md:basis-1/2 lg:basis-1/4">
+                                <div className='space-y-2 overflow-x-auto'>
+                                    <div className='relative w-[200px] h-[200px] overflow-hidden rounded-md'>
+                                        <Image src={artwork.imageUrl} fill objectFit='cover' alt={artwork.title} />
+                                    </div>
+                                    <h4 className="mt-2 font-semibold">{artwork.title}</h4>
+                                    <p className='font-extralight text-slate-400'>₱ {artwork.startingPrice}</p>
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className='text-primary' />
+                    <CarouselNext className='text-primary' />
+                </Carousel>
             </ContentSection>
-
-
         </div>
     )
 }
