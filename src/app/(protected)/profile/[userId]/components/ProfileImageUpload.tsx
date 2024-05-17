@@ -64,11 +64,12 @@ const ProfileImageUpload: FC<ProfileImageUploadProps> = () => {
                             <div className="flex flex-col items-center justify-center">
                                 <UploadButton
                                     appearance={{
-                                        button:
-                                            "ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-[#8889DA] px-4 bg-none after:bg-orange-400",
-                                        container: "w-max flex-row rounded-md border-cyan-300 bg-slate-800",
-                                        allowedContent:
-                                            "flex h-8 flex-col items-center justify-center px-2 text-white",
+                                        button({ ready, isUploading }) {
+                                            return `custom-button ${ready ? "custom-button-ready" : "custom-button-not-ready"
+                                                } ${isUploading ? "custom-button-uploading" : ""}`;
+                                        },
+                                        container: "custom-container",
+                                        allowedContent: "custom-allowed-content",
                                     }}
                                     endpoint="imageUploader"
                                     onClientUploadComplete={(res) => {
