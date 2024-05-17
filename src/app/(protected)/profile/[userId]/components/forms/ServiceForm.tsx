@@ -15,6 +15,7 @@ import toast from 'react-hot-toast'
 import { Services } from '@prisma/client'
 import { Input } from '@/components/ui/input'
 import { UploadButton, UploadDropzone } from '@/utils/uploadthing'
+import { HandCoins } from 'lucide-react'
 
 interface ServiceFormProps {
 }
@@ -59,7 +60,9 @@ const ServiceForm: FC<ServiceFormProps> = ({
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger className='px-4 py-1 rounded-full bg-[#8889DA]'>
-                Add new service
+                <p className="flex flex-row justify-center items-center">
+                    <HandCoins className='mr-2' size={20} />Add Service
+                </p>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>New Service</DialogHeader>
@@ -72,7 +75,11 @@ const ServiceForm: FC<ServiceFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder='3D Art' type='text' autoComplete={Math.random().toString()} />
+                                        <Input {...field}
+                                            placeholder='3D Art'
+                                            type='text'
+                                            autoComplete={Math.random().toString()}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
