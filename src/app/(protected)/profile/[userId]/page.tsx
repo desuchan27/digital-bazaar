@@ -48,7 +48,7 @@ const page = async ({ params }: {
     console.log("get user: ", getUser)
 
     return (
-        <div className='text-primary-foreground pt-[60px] h-fit'>
+        <div className='text-primary-foreground pt-[60px]'>
             <div className="mx-4 my-4">
                 <Container>
                     <Profile
