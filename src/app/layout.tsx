@@ -26,11 +26,13 @@ export default async function RootLayout({
     <html lang="en">
       <SessionProvider value={session}>
         <body className={`${inter.className} bg-primary`}>
-          <Toaster
-            position='top-center'
-          />
-          <Navbar />
-          {children}
+          <div className="min-h-screen">
+            <Toaster
+              position='top-center'
+            />
+            <Navbar />
+            {children}
+          </div>
           <Footer />
         </body>
       </SessionProvider>

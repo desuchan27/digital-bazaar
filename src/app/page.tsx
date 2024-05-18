@@ -31,7 +31,7 @@ export default function Home() {
       </div>
 
       <div className="w-full h-screen bg-gradient-to-r relative overflow-hidden">
-        <div className='h-[700px] w-[700px] absolute top-[9rem] left-[-15rem] bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
+        <div className='h-[400px] w-[400px] md:h-[350px] md:w-[350px] xl:h-[700px] xl:w-[700px] absolute top-[9rem] left-[-15rem] bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
         <Container>
           <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
             TODO: trending section
@@ -40,7 +40,7 @@ export default function Home() {
       </div>
 
       <div className="w-full h-screen bg-gradient-to-r relative overflow-hidden ">
-        <div className='h-[700px] w-[700px] absolute top-[10rem] right-[-15rem] bg-[#AAD9D9] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
+        <div className='h-[400px] w-[400px] md:h-[350px] md:w-[350px] xl:h-[700px] xl:w-[700px] absolute top-[10rem] right-[-15rem] bg-[#AAD9D9] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
         <Container>
           <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
             TODO: featured artist section
