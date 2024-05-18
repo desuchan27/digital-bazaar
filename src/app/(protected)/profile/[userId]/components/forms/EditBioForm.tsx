@@ -22,12 +22,6 @@ const EditBioForm: FC<EditBioFormProps> = ({ }) => {
 
     const router = useRouter()
 
-    // const [isOpen, setIsOpen] = useState(false)
-
-    // const closeForm = () => {
-    //     setIsOpen(false)
-    // }
-
     const form = useForm<z.infer<typeof bioFormSchema>>({
         resolver: zodResolver(bioFormSchema),
         defaultValues: {
