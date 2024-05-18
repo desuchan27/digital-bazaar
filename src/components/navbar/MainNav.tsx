@@ -1,6 +1,6 @@
 "use client"
 
-import { HandCoins, LinkIcon, LogIn, LogOutIcon, SquareArrowUp, SquareArrowUpRight, User, UserIcon } from 'lucide-react'
+import { HandCoins, LinkIcon, LogIn, LogOutIcon, SettingsIcon, SquareArrowUp, SquareArrowUpRight, User, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
@@ -15,6 +15,9 @@ import { useSession } from '@/lib/auth/SessionContext'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { LogoutButton } from '../auth/LogoutButton'
+import { Avatar, AvatarImage } from '../ui/avatar'
+import { AvatarFallback } from '@radix-ui/react-avatar'
+import { Separator } from '../ui/separator'
 
 
 interface MainNavProps {
@@ -26,12 +29,16 @@ const MainNav: FC<MainNavProps> = ({ }) => {
     const pathName = usePathname()
     const session = useSession()
 
+    // const getName = session.user?.name
+
+    const nameInitials = session.user?.name.split(' ').map(word => word[0].toUpperCase()).join('');
+
 
 
 
     return (
         <nav>
-            <ul className='flex flex-row gap-x-4'>
+            <ul className='flex flex-row space-x-4'>
 
                 {/* services */}
 
@@ -89,24 +96,48 @@ const MainNav: FC<MainNavProps> = ({ }) => {
 
                         <Popover>
                             <PopoverTrigger>
-                                <UserIcon className={
+                                {/* <UserIcon className={
                                     cn(pathName === '/profile' ? 'text-primary' : 'bg-none')
-                                } />
+                                } /> */}
+                                <Avatar className='flex items-center justify-center'>
+                                    <AvatarImage src={session.user.image} />
+                                    <AvatarFallback>{nameInitials}</AvatarFallback>
+                                </Avatar>
                             </PopoverTrigger>
-                            <PopoverContent className='w-fit mt-2'>
+                            <PopoverContent className='w-md mt-2'>
                                 <ul className='flex flex-col items-start space-y-2'>
-                                    <li >
-                                        <Link href={`/profile/${session.user.id}`} className='flex flex-row'>
-                                            <SquareArrowUpRight className='text-primary mr-2' />{session.user.name}
-                                        </Link>
-                                    </li>
-                                    <li >
-                                        <LogoutButton >
-                                            <span className='flex flex-row'>
-                                                <LogOutIcon className='text-primary mr-2' /> Logout
+                                    <div>
+                                        <Link href={`/profile/${session.user.id}`} className='flex flex-row items-center justify-between px-4 py-4 hover:bg-muted rounded-sm transition-all ease-in mb-2'>
+                                            <Avatar className='flex items-center justify-center mr-4'>
+                                                <AvatarImage src={session.user.image} />
+                                                <AvatarFallback>{nameInitials}</AvatarFallback>
+                                            </Avatar>
+                                            <span>
+                                                <p>{session.user.name}</p>
+                                                <p className='text-xs text-slate-700'>{session.user.email}</p>
                                             </span>
-                                        </LogoutButton>
-                                    </li>
+                                        </Link>
+                                    </div>
+                                    <Separator />
+
+
+                                    <ul className='px-2 py-1 w-full space-y-2'>
+                                        <li className='px-2 py-1 hover:bg-muted rounded-sm transition-all ease-in'>
+                                            <Link href='/settings'>
+                                                <span className='flex flex-row items-center'>
+                                                    <SettingsIcon className='text-primary text-xs mr-2' size={19} /> Settings
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li className='px-2 py-1 hover:bg-muted rounded-sm transition-all ease-in'>
+                                            <LogoutButton >
+                                                <span className='flex flex-row items-center'>
+                                                    <LogOutIcon className='text-primary text-xs mr-2' size={19} /> Logout
+                                                </span>
+                                            </LogoutButton>
+                                        </li>
+                                    </ul>
+
                                 </ul>
                             </PopoverContent>
                         </Popover>
