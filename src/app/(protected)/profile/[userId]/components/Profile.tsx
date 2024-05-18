@@ -15,6 +15,8 @@ import EditProfileForm from './forms/EditProfileForm'
 import ServiceForm from './forms/ServiceForm'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import ArtworkForm from './forms/ArtworkForm'
+import { Card, CardContent } from '@/components/ui/card'
+import Link from 'next/link'
 
 interface ProfileProps {
     name: string | null
@@ -49,7 +51,7 @@ const Profile: FC<ProfileProps> = ({
     console.log(session)
 
     return (
-        <div className='h-full space-y-4'>
+        <div className='h-auto space-y-4'>
 
             {/* profile header */}
             <ProfileSection>
@@ -81,7 +83,6 @@ const Profile: FC<ProfileProps> = ({
                         </div>
                     </div>
                     <div className='w-2/3 flex flex-col justify-center space-y-4 px-4'>
-
                         <div className='flex flex-row items-end'>
                             <h2 className='text-4xl font-semibold'>{name}</h2> <span className='ml-4 text-sm text-slate-400'>{userName}</span>
                         </div>
@@ -134,8 +135,6 @@ const Profile: FC<ProfileProps> = ({
                                 </div>
                             </div>
                         )}
-
-
                     </div>
                 </div>
             </ProfileSection>
@@ -145,21 +144,20 @@ const Profile: FC<ProfileProps> = ({
                 <h3 className='text-2xl'>All services</h3>
 
                 <Carousel
-                    opts={{
-                        align: "start",
-                    }}
-                    className="w-full max-w-5xl mx-auto mt-10"
+                    className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
                 >
                     <CarouselContent>
                         {services.map((service: Services) => (
                             <CarouselItem key={service.id} className="md:basis-1/2 lg:basis-1/4">
-                                <div className='space-y-2 overflow-x-auto'>
-                                    <div className='relative w-[200px] h-[200px] overflow-hidden rounded-md'>
-                                        <Image src={service.thumbnail} fill objectFit='cover' alt={service.name} />
+                                <Link href={`/artworks/${service.id}`}>
+                                    <div className='p-1'>
+                                        <div className='flex aspect-square items-center justify-center p-6 relative overflow-hidden bg-none'>
+                                            <Image src={service.thumbnail} fill objectFit='cover' alt={service.name} className='rounded-sm' />
+                                        </div>
+                                        <h4 className="mt-2 font-semibold">{service.name}</h4>
+                                        <p className='font-extralight text-slate-400'>₱ {service.startingPrice}</p>
                                     </div>
-                                    <h4 className="mt-2 font-semibold">{service.name}</h4>
-                                    <p className='font-extralight text-slate-400'>₱ {service.startingPrice}</p>
-                                </div>
+                                </Link>
                             </CarouselItem>
                         ))}
                     </CarouselContent>
@@ -168,26 +166,26 @@ const Profile: FC<ProfileProps> = ({
                 </Carousel>
             </ContentSection>
 
+
             {/* artworks */}
             <ContentSection>
                 <h3 className='text-2xl'>All Artworks</h3>
 
                 <Carousel
-                    opts={{
-                        align: "start",
-                    }}
-                    className="w-full max-w-5xl mx-auto mt-10"
+                    className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
                 >
                     <CarouselContent>
                         {artworks.map((artwork: Artwork) => (
                             <CarouselItem key={artwork.id} className="md:basis-1/2 lg:basis-1/4">
-                                <div className='space-y-2 overflow-x-auto'>
-                                    <div className='relative w-[200px] h-[200px] overflow-hidden rounded-md'>
-                                        <Image src={artwork.imageUrl} fill objectFit='cover' alt={artwork.title} />
+                                <Link href={`/artworks/${artwork.id}`}>
+                                    <div className='p-1'>
+                                        <div className='flex aspect-square items-center justify-center p-6 relative overflow-hidden bg-none'>
+                                            <Image src={artwork.imageUrl} fill objectFit='cover' alt={artwork.title} className='rounded-sm' />
+                                        </div>
+                                        <h4 className="mt-2 font-semibold">{artwork.title}</h4>
+                                        <p className='font-extralight text-slate-400'>₱ {artwork.startingPrice}</p>
                                     </div>
-                                    <h4 className="mt-2 font-semibold">{artwork.title}</h4>
-                                    <p className='font-extralight text-slate-400'>₱ {artwork.startingPrice}</p>
-                                </div>
+                                </Link>
                             </CarouselItem>
                         ))}
                     </CarouselContent>
