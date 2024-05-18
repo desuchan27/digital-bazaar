@@ -9,7 +9,7 @@ const ProfileSection: FC<ProfileSectionProps> = ({
     children
 }) => {
     return (
-        <div className='w-full h-[300px] rounded-sm bg-[#1E1F57] overflow-auto px-6 py-6'>{children}</div>
+        <div className='w-full h-fit rounded-sm bg-[#1E1F57] px-6 py-6'>{children}</div>
     )
 }
 

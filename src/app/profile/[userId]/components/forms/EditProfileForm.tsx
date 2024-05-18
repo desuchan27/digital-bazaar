@@ -60,7 +60,7 @@ const EditProfileForm: FC<EditProfileFormProps> = ({ userData }) => {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger className='px-4 py-2 rounded-full bg-[#8889DA]'>
                 <p className="flex flex-row justify-center items-center">
-                    <EditIcon className='mr-2' size={20} />Edit Profile
+                    <EditIcon className='mr-0 md:mr-2' size={20} /><span className='hidden md:flex'>Edit Profile</span>
                 </p>
             </DialogTrigger>
             <DialogContent>

@@ -63,7 +63,7 @@ const ArtworkForm: FC<ArtworkFormProps> = ({
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger className='px-4 py-1 rounded-full bg-[#8889DA]'>
                 <p className="flex flex-row justify-center items-center">
-                    <PencilIcon className='mr-2' size={20} />Post Artwork
+                    <PencilIcon className='mr-0 md:mr-2' size={20} /><span className='hidden md:flex'>Post Artwork</span>
                 </p>
             </DialogTrigger>
             <DialogContent className='md:max-w-4xl overflow-auto'>
@@ -204,9 +204,7 @@ const ArtworkForm: FC<ArtworkFormProps> = ({
                                 />
                                 <div className="flex justify-end"><Button type='submit'>Submit</Button></div>
                             </div>
-
                         </div>
-
 
                     </form>
                 </Form>

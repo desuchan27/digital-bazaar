@@ -53,14 +53,15 @@ const Profile: FC<ProfileProps> = ({
     return (
         <div className='h-auto space-y-4'>
 
+            {/* web */}
             {/* profile header */}
             <ProfileSection>
-                <div className='flex flex-row h-full'>
+                <div className='hidden lg:flex flex-row h-full'>
                     <div className='w-1/3 h-full flex items-center justify-center overflow-hidden'>
                         <div className='relative  w-[250px] h-[250px] rounded overflow-hidden'>
                             {image && image.length >= 1 ? (
                                 <>
-                                    <div className='overflow-hidden'>
+                                    <div className='overflow-hidden aspect-square'>
                                         <Image src={image} fill objectFit='cover' className='rounded-full' alt={`${name}'s image`} />
                                     </div>
                                     {isCurrentUser && session && (
@@ -116,21 +117,105 @@ const Profile: FC<ProfileProps> = ({
 
                         {userType === "ARTIST" ? (
                             <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
-                                <div className='overflow-x-auto'>
+                                <div>
                                     <p>Artworks: {artworks.length > 0 ? <span>{artworks.length}</span> : 'None'}</p>
                                 </div>
 
-                                <div className='overflow-x-auto'>
+                                <div>
                                     <p>Services: {services.length > 0 ? <span>{services.length}</span> : 'None'}</p>
                                 </div>
 
-                                <div className='overflow-x-auto'>
+                                <div>
                                     <p>Joined: {session.user?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
                         ) : (
                             <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
-                                <div className='overflow-x-auto'>
+                                <div>
+                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* mobile */}
+
+                <div className='lg:hidden flex flex-col h-full space-y-2'>
+                    <div className='w-full h-full flex items-center justify-start overflow-hidden'>
+                        <div className='relative  w-[90px] h-[90px] rounded overflow-hidden'>
+                            {image && image.length >= 1 ? (
+                                <>
+                                    <div className='overflow-hidden aspect-square'>
+                                        <Image src={image} fill objectFit='cover' className='rounded-full' alt={`${name}'s image`} />
+                                    </div>
+                                    {/* {isCurrentUser && session && (
+                                        <Button className='absolute bottom-0 right-0 mb-2 mr-2 bg-[#8889DA] text-white font-bold py-2 px-4 rounded  transition-opacity duration-200'>
+                                            <Edit size={24} />
+                                        </Button>
+                                    )} */}
+                                </>
+                            ) : (
+                                isCurrentUser && session ? (
+                                    <div className='w-[250px] h-[250px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
+                                        <ProfileImageUpload />
+                                    </div>
+                                ) : (
+                                    <div className='w-[250px] h-[250px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
+                                        <UserIcon size={200} color='white' />
+                                    </div>
+                                )
+                            )}
+                        </div>
+                        <div className='flex flex-col text-left items-start ml-4'>
+                            <h2 className='text-xl font-semibold'>{name}</h2> <span className='text-sm text-slate-400'>{userName}</span>
+                        </div>
+                    </div>
+                    <div className='w-full flex flex-col justify-center space-y-4 px-4'>
+                        <div>
+                            {bio && bio.length > 0 ? (
+                                <p>{bio}</p>
+                            ) : (
+                                isCurrentUser && session ? <EditBioForm /> : null
+                            )}
+                        </div>
+
+                        {isCurrentUser && session && session.user ? (
+                            session.user.type && userType === "ARTIST" ? (
+                                <div className='flex flex-row space-x-4 my-4 '>
+                                    <EditProfileForm userData={userData} />
+                                    <ArtworkForm services={services} />
+                                    <ServiceForm />
+                                </div>
+                            ) : (
+                                <div className='flex flex-row space-x-4 my-4'>
+                                    <EditProfileForm userData={userData} />
+                                </div>
+                            )
+                        ) : (
+                            <div>
+                                <Button className='px-4 py-1 rounded-full bg-[#8889DA]'>Contact</Button>
+                            </div>
+                        )}
+
+
+                        {userType === "ARTIST" ? (
+                            <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
+                                <div >
+                                    <p>Artworks: {artworks.length > 0 ? <span>{artworks.length}</span> : 'None'}</p>
+                                </div>
+
+                                <div >
+                                    <p>Services: {services.length > 0 ? <span>{services.length}</span> : 'None'}</p>
+                                </div>
+
+                                <div >
+                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
+                                <div>
                                     <p>Joined: {session.user?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
@@ -148,7 +233,7 @@ const Profile: FC<ProfileProps> = ({
                 >
                     <CarouselContent>
                         {services.map((service: Services) => (
-                            <CarouselItem key={service.id} className="md:basis-1/2 lg:basis-1/4">
+                            <CarouselItem key={service.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6">
                                 <Link href={`/artworks/${service.id}`}>
                                     <div className='p-1'>
                                         <div className='flex aspect-square items-center justify-center p-6 relative overflow-hidden bg-none'>
