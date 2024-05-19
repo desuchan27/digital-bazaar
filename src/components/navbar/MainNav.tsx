@@ -52,7 +52,7 @@ const MainNav: FC<MainNavProps> = ({ }) => {
                         <Tooltip>
                             <TooltipTrigger>
                                 <div className='absolute inset-0 flex items-center justify-center'>
-                                    <HandCoins className={cn(pathName === '/' ? 'text-primary-foreground' : '')} />
+                                    <HandCoins className={cn(pathName === '/services' ? 'text-primary' : '')} />
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent className='mt-3'>
