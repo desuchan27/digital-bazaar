@@ -126,13 +126,13 @@ const Profile: FC<ProfileProps> = ({
                                 </div>
 
                                 <div>
-                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                    <p>Joined: {userData?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
                         ) : (
                             <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
                                 <div>
-                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                    <p>Joined: {userData?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
                         )}
@@ -157,12 +157,12 @@ const Profile: FC<ProfileProps> = ({
                                 </>
                             ) : (
                                 isCurrentUser && session ? (
-                                    <div className='w-[250px] h-[250px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
+                                    <div className='w-[90px] h-[90px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
                                         <ProfileImageUpload />
                                     </div>
                                 ) : (
-                                    <div className='w-[250px] h-[250px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
-                                        <UserIcon size={200} color='white' />
+                                    <div className='w-[90px] h-[90px] flex items-center justify-center bg-[#8889DA] rounded-full overflow-hidden'>
+                                        <UserIcon size={80} color='white' />
                                     </div>
                                 )
                             )}
@@ -210,13 +210,13 @@ const Profile: FC<ProfileProps> = ({
                                 </div>
 
                                 <div >
-                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                    <p>Joined: {userData?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
                         ) : (
                             <div className='flex flex-col justify-between mt-auto space-y-1 text-sm'>
                                 <div>
-                                    <p>Joined: {session.user?.createdAt.toDateString()} </p>
+                                    <p>Joined: {userData?.createdAt.toDateString()} </p>
                                 </div>
                             </div>
                         )}
@@ -226,9 +226,9 @@ const Profile: FC<ProfileProps> = ({
 
             {/* Services */}
             <ContentSection>
-                <h3 className='text-2xl'>All services</h3>
+                <h3 className='text-xl'>Services</h3>
 
-                <Carousel
+                {services && services.length > 0 ? (<Carousel
                     className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
                 >
                     <CarouselContent>
@@ -248,15 +248,20 @@ const Profile: FC<ProfileProps> = ({
                     </CarouselContent>
                     <CarouselPrevious className='text-primary' />
                     <CarouselNext className='text-primary' />
-                </Carousel>
+                </Carousel>) : (
+                    <div className='flex flex-col items-center justify-center space-y-4 h-[400px]'>
+                        <h3 className='text-xl'>No services available</h3>
+
+                    </div>
+                )}
             </ContentSection>
 
 
             {/* artworks */}
             <ContentSection>
-                <h3 className='text-2xl'>All Artworks</h3>
+                <h3 className='text-xl'>All Artworks</h3>
 
-                <Carousel
+                {artworks && artworks.length > 0 ? (<Carousel
                     className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
                 >
                     <CarouselContent>
@@ -276,7 +281,11 @@ const Profile: FC<ProfileProps> = ({
                     </CarouselContent>
                     <CarouselPrevious className='text-primary' />
                     <CarouselNext className='text-primary' />
-                </Carousel>
+                </Carousel>) : (
+                    <div className='flex flex-col items-center justify-center space-y-4 h-[400px]'>
+                        <h3 className='text-xl'>No artworks available</h3>
+                    </div>
+                )}
             </ContentSection>
         </div>
     )
