@@ -28,7 +28,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ data }) => {
                 />
             </div>
             <div className='px-2 py-2'>
-                <p className='text-sm sm:text-base transition-colors duration-200 group-hover:text-[#5a5cee]'>
+                <p className='text-sm sm:text-base transition-colors duration-200 group-hover:text-[#8889DA]'>
                     {data.name.length > 25 ? `${data.name.slice(0, 25)}...` : data.name}
                 </p>
                 <p className=' text-sm text-orange-200'>
