@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Profile from './components/Profile'
+import ProfileClient from './components/ProfileClient'
 import Container from '@/components/layouts/web/Container'
 import { db } from '@/lib/db'
 import { validateRequest } from '@/auth'
@@ -51,7 +51,7 @@ const page = async ({ params }: {
         <div className='text-primary-foreground pt-[60px]'>
             <div className="mx-4 my-4">
                 <Container>
-                    <Profile
+                    <ProfileClient
                         name={getUserName}
                         userName={getUserUsername}
                         bio={getUserBio}

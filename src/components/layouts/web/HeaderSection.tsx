@@ -1,11 +1,11 @@
 "use client"
 import { FC } from 'react'
 
-interface ServiceSectionProps {
+interface HeaderSectionProps {
     children: React.ReactNode
 }
 
-const ServiceSection: FC<ServiceSectionProps> = ({
+const HeaderSection: FC<HeaderSectionProps> = ({
     children
 }) => {
     return (
@@ -13,4 +13,4 @@ const ServiceSection: FC<ServiceSectionProps> = ({
     )
 }
 
-export default ServiceSection
+export default HeaderSection

@@ -3,7 +3,7 @@
 import { getArtworks } from '@/actions/artwork.actions'
 import { getServices } from '@/actions/services.actions'
 import ContentSection from '@/components/layouts/web/ContentSection'
-import ServiceHeaderSection from '@/components/layouts/web/ServiceHeaderSection'
+import HeaderSection from '@/components/layouts/web/HeaderSection'
 import SideSection from '@/components/layouts/web/SideSection'
 import ArtworkCard from '@/components/ui/ArtworkCard'
 import ServiceCard from '@/components/ui/ServicesCard'
@@ -21,7 +21,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FC } from 'react'
 
-interface ServiceSectionProps {
+interface ServiceClientProps {
     // name: string | null
     // description: string | null
     // startingPrice: number | null
@@ -32,7 +32,7 @@ interface ServiceSectionProps {
     userData: User | null
 }
 
-const ServiceSection: FC<ServiceSectionProps> = ({
+const ServiceClient: FC<ServiceClientProps> = ({
     // name,
     // description,
     // startingPrice,
@@ -69,7 +69,7 @@ const ServiceSection: FC<ServiceSectionProps> = ({
     return (
         <div className='px-4 py-4 flex flex-col w-full space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:px-0'>
             <div className="w-full space-y-4 md:w-3/4">
-                <ServiceHeaderSection>
+                <HeaderSection>
                     <div className='flex flex-col md:flex-row'>
                         <div className="relative w-full md:w-3/5 md:hidden ">
                             <AspectRatio ratio={4 / 3}>
@@ -118,7 +118,7 @@ const ServiceSection: FC<ServiceSectionProps> = ({
                             </div>
                         </div>
                     </div>
-                </ServiceHeaderSection>
+                </HeaderSection>
 
                 {/* mobile */}
                 {artworks
@@ -154,7 +154,7 @@ const ServiceSection: FC<ServiceSectionProps> = ({
                     )}
             </div>
             <div className='w-full space-y-4 md:w-1/4'>
-                <ServiceHeaderSection>
+                <HeaderSection>
                     <div
                         onClick={toUserProfile}
                         className="space-y-4 cursor-pointer"
@@ -173,7 +173,7 @@ const ServiceSection: FC<ServiceSectionProps> = ({
 
                         </div>
                     </div>
-                </ServiceHeaderSection>
+                </HeaderSection>
                 <SideSection>
                     <div className="w-full flex flex-row justify-between items-center py-2">
                         <h4 className='text-sm md:text-base'>Recent from {userData?.username}</h4>
@@ -248,4 +248,4 @@ const ServiceSection: FC<ServiceSectionProps> = ({
     )
 }
 
-export default ServiceSection
+export default ServiceClient

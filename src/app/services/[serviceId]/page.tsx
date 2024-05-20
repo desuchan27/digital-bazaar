@@ -1,7 +1,7 @@
 
 import Container from '@/components/layouts/web/Container'
 import { FC } from 'react'
-import ServiceSection from './components/ServiceSection'
+import ServiceClient from './components/ServiceClient'
 import { db } from '@/lib/db'
 
 interface pageProps {
@@ -55,7 +55,7 @@ const page: FC<pageProps> = async ({
         <div className='py-[64px] flex flex-col min-h-screen text-primary-foreground'>
             <div className="flex-grow">
                 <Container>
-                    <ServiceSection
+                    <ServiceClient
                         // name={getServiceName}
                         // description={getServiceDescription}
                         // startingPrice={getServiceStartingPrice}
