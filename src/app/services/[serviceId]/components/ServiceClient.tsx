@@ -12,7 +12,9 @@ import { Avatar } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
 import { ArtworkWithUser, ServiceWithUser } from '@/types'
 import { Artwork, Services, User } from '@prisma/client'
 import { ArrowUpRight, ChevronRight, MoreHorizontal, SparkleIcon, Sparkles } from 'lucide-react'
@@ -44,6 +46,8 @@ const ServiceClient: FC<ServiceClientProps> = ({
 
     const [services, setServices] = useState<ServiceWithUser[]>([]);
     const [artworks, setArtworks] = useState<ArtworkWithUser[]>([]);
+    const [itemsPerPage, setItemsPerPage] = useState(50);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -62,37 +66,35 @@ const ServiceClient: FC<ServiceClientProps> = ({
     }, [])
     console.log("service data: ", serviceData)
 
+    const totalPages = Math.ceil(services.length / itemsPerPage);
+
     const toUserProfile = () => {
         window.location.href = `/profile/${userData?.id}`
     }
 
     return (
         <div className='px-4 py-4 flex flex-col w-full space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:px-0'>
+
+            {/* service data */}
             <div className="w-full space-y-4 md:w-3/4">
                 <HeaderSection>
+
                     <div className='flex flex-col md:flex-row'>
+
+                        {/* mobile */}
                         <div className="relative w-full md:w-3/5 md:hidden ">
                             <AspectRatio ratio={4 / 3}>
                                 <Image src={serviceData?.thumbnail || ''} fill alt="test" objectFit='cover' />
                             </AspectRatio>
                         </div>
                         <div className="relative w-full md:w-3/5 hidden md:block md:min-h-[500px]">
-                            {/* <AspectRatio ratio={16 / 9}> */}
                             <Image src={serviceData?.thumbnail || ''} fill alt="test" objectFit='cover' />
-                            {/* </AspectRatio> */}
                         </div>
                         <div className='w-full px-4 my-4 space-y-4 md:w-2/5 md:py-0'>
                             <div className='w-full space-y-0'>
                                 <h1 className="text-2xl font-semibold md:text-4xl">
                                     {serviceData?.name}
                                 </h1>
-                                {/* <p className='text-2xl font-extralight'>
-                                    Starting at:<br />
-                                    <span className='text-orange-200 font-semibold'>
-                                        ₱{' '}{serviceData?.startingPrice}
-                                    </span>
-                                </p> */}
-
                             </div>
 
                             <p className='text-sm md:text-base'>
@@ -105,13 +107,11 @@ const ServiceClient: FC<ServiceClientProps> = ({
                             </p>
                             <Separator />
 
-                            {/* mobile */}
+                            {/* web */}
                             <div className="space-y-2 hidden md:block">
                                 <p className='mx-auto text-md font-extralight md:text-xl'>Starts at: <span className='font-semibold text-orange-300'>₱ {serviceData?.startingPrice}</span></p>
                                 <Button className='bg-[#8889DA] rounded-full'><Sparkles size={20} className='mr-2' /> Interested!</Button>
                             </div>
-
-                            {/* desktop */}
                             <div className="space-y-2 w-full flex flex-col md:hidden">
                                 <p className='mx-auto text-md font-extralight md:text-xl'>Starts at: <span className='font-semibold text-orange-300'>₱ {serviceData?.startingPrice}</span></p>
                                 <Button className='bg-[#8889DA] rounded-full'><Sparkles size={20} className='mr-2' /> Interested!</Button>
@@ -120,7 +120,7 @@ const ServiceClient: FC<ServiceClientProps> = ({
                     </div>
                 </HeaderSection>
 
-                {/* mobile */}
+                {/* artworks under service display mobile */}
                 {artworks
                     .filter(artwork => artwork.userId === userData?.id && artwork.serviceId === serviceData?.id)
                     .length > 0 && (
@@ -152,8 +152,74 @@ const ServiceClient: FC<ServiceClientProps> = ({
                             </ContentSection>
                         </div>
                     )}
+
+                {/* display more services web */}
+                <div className="hidden md:block">
+                    <ContentSection>
+                        <h2 className='text-xl'>Explore more services</h2>
+                        <div className='min-h-[1000px] flex flex-col space-y-2 mx-auto mt-4'>
+                            <div className='grid grid-cols-2 lg:grid-cols-5 gap-4'>
+                                {services
+                                    .filter(service => service.id !== serviceData?.id)
+                                    .sort(() => Math.random() - 0.5)
+                                    .map((service) => (
+                                        <ServiceCard key={service.id} data={service} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <Pagination className='mx-auto my-4'>
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious
+                                        className='text-primary-foreground cursor-pointer'
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentPage((prev) => Math.max(prev - 1, 1));
+                                        }}
+                                    />
+                                </PaginationItem>
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => {
+                                    if (pageNumber === 1 || pageNumber === totalPages || (pageNumber >= currentPage - 2 && pageNumber <= currentPage + 2)) {
+                                        return (
+                                            <PaginationItem key={pageNumber}>
+                                                <PaginationLink
+                                                    className={
+                                                        cn(currentPage === pageNumber ? 'bg-primary-foreground text-black' : 'text-primary-foreground')
+                                                    }
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        setCurrentPage(pageNumber);
+                                                    }}
+                                                    isActive={pageNumber === currentPage}
+                                                >
+                                                    {pageNumber}
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                        );
+                                    } else if (pageNumber === currentPage - 3 || pageNumber === currentPage + 3) {
+                                        return <PaginationItem key={pageNumber}>...</PaginationItem>;
+                                    } else {
+                                        return null;
+                                    }
+                                })}
+                                <PaginationItem>
+                                    <PaginationNext
+                                        className='text-primary-foreground cursor-pointer'
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentPage((prev) => prev + 1);
+                                        }}
+                                    />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    </ContentSection>
+                </div>
             </div>
+
             <div className='w-full space-y-4 md:w-1/4'>
+                {/* user profile */}
                 <HeaderSection>
                     <div
                         onClick={toUserProfile}
@@ -174,7 +240,9 @@ const ServiceClient: FC<ServiceClientProps> = ({
                         </div>
                     </div>
                 </HeaderSection>
+
                 <SideSection>
+                    {/* recent artworks from user display */}
                     <div className="w-full flex flex-row justify-between items-center py-2">
                         <h4 className='text-sm md:text-base'>Recent from {userData?.username}</h4>
                         {artworks
@@ -186,6 +254,8 @@ const ServiceClient: FC<ServiceClientProps> = ({
                                 >See More <ChevronRight className='ml-2' /></Link>
                             )}
                     </div>
+
+                    {/* recent services from same user display mobile */}
                     <Carousel
                         className='md:hidden'
                     >
@@ -209,6 +279,8 @@ const ServiceClient: FC<ServiceClientProps> = ({
                         >See More <ChevronRight className='ml-2' size={25} /></Link>
                     </div> */}
                 </SideSection>
+
+                {/* artworks under service display desktop */}
                 {artworks
                     .filter(artwork => artwork.userId === userData?.id && artwork.serviceId === serviceData?.id)
                     .length > 0 && (
@@ -235,12 +307,82 @@ const ServiceClient: FC<ServiceClientProps> = ({
                                                 className='text-xs flex flex-row items-center justify-end hover:text-[#8889DA] md:text-base'
                                             >See More <ChevronRight className='ml-2' size={25} /></Link>
                                         )}
-
-
                                 </div>
                             </ContentSection>
                         </div>
                     )}
+            </div>
+
+            {/* display more services mobile */}
+            <div className="block md:hidden">
+                <ContentSection>
+                    <h2 className='text-xl'>Explore more services</h2>
+                    <div className='min-h-[1000px] flex flex-col space-y-2 mx-auto mt-4'>
+                        <div className='grid grid-cols-2 lg:grid-cols-5 gap-4'>
+
+                            {/* {services
+                                .filter(service => service.userId !== userData?.id)
+                                .sort(() => Math.random() - 0.5)
+                                .map((service) => (
+                                    <ServiceCard key={service.id} data={service} />
+                                ))
+                            } */}
+                            {services
+                                .filter(service => service.id !== serviceData?.id)
+                                .sort(() => Math.random() - 0.5)
+                                .map((service) => (
+                                    <ServiceCard key={service.id} data={service} />
+                                ))
+                            }
+                        </div>
+                    </div>
+                    <Pagination className='mx-auto my-4'>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    className='text-primary-foreground cursor-pointer'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setCurrentPage((prev) => Math.max(prev - 1, 1));
+                                    }}
+                                />
+                            </PaginationItem>
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => {
+                                if (pageNumber === 1 || pageNumber === totalPages || (pageNumber >= currentPage - 2 && pageNumber <= currentPage + 2)) {
+                                    return (
+                                        <PaginationItem key={pageNumber}>
+                                            <PaginationLink
+                                                className={
+                                                    cn(currentPage === pageNumber ? 'bg-primary-foreground text-black' : 'text-primary-foreground')
+                                                }
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setCurrentPage(pageNumber);
+                                                }}
+                                                isActive={pageNumber === currentPage}
+                                            >
+                                                {pageNumber}
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                    );
+                                } else if (pageNumber === currentPage - 3 || pageNumber === currentPage + 3) {
+                                    return <PaginationItem key={pageNumber}>...</PaginationItem>;
+                                } else {
+                                    return null;
+                                }
+                            })}
+                            <PaginationItem>
+                                <PaginationNext
+                                    className='text-primary-foreground cursor-pointer'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setCurrentPage((prev) => prev + 1);
+                                    }}
+                                />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </ContentSection>
             </div>
         </div>
 
