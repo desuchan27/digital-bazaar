@@ -36,22 +36,37 @@ const page: FC<pageProps> = async ({
     const getServices = await db.services.findMany({
         where: {
             userId: getUser?.id
+        },
+        include: {
+            user: true
+        }
+    })
+
+    const getArtworks = await db.artwork.findMany({
+        where: {
+            userId: getUser?.id
+        },
+        include: {
+            user: true
         }
     })
 
     return (
-        <div className='py-[64px] text-primary-foreground'>
-            <Container>
-                <ServiceSection
-                    name={getServiceName}
-                    description={getServiceDescription}
-                    startingPrice={getServiceStartingPrice}
-                    thumbnail={getServiceThumbnail}
-                    userData={getUser}
-                    serviceData={getService}
-
-                />
-            </Container>
+        <div className='py-[64px] flex flex-col min-h-screen text-primary-foreground'>
+            <div className="flex-grow">
+                <Container>
+                    <ServiceSection
+                        // name={getServiceName}
+                        // description={getServiceDescription}
+                        // startingPrice={getServiceStartingPrice}
+                        // thumbnail={getServiceThumbnail}
+                        serviceData={getService}
+                        servicesData={getServices}
+                        artworksData={getArtworks}
+                        userData={getUser}
+                    />
+                </Container>
+            </div>
         </div>
     )
 }
