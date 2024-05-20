@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Services from './components/Services'
+import ServicesClient from './components/ServicesClient'
 import Container from '@/components/layouts/web/Container'
 import { Services as ServicesDb } from '@prisma/client'
 
@@ -13,7 +13,7 @@ const page: FC<pageProps> = ({
     return (
         <div className='py-[64px]'>
             <Container>
-                <Services services={services} />
+                <ServicesClient services={services} />
             </Container>
         </div>
     )
