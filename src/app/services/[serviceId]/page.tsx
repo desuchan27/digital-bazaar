@@ -20,10 +20,10 @@ const page: FC<pageProps> = async ({
         }
     })
 
-    const getServiceName = getService?.name || null
-    const getServiceDescription = getService?.description || null
-    const getServiceStartingPrice = getService?.startingPrice || null
-    const getServiceThumbnail = getService?.thumbnail || null
+    // const getServiceName = getService?.name || null
+    // const getServiceDescription = getService?.description || null
+    // const getServiceStartingPrice = getService?.startingPrice || null
+    // const getServiceThumbnail = getService?.thumbnail || null
 
     const getUser = await db.user.findUnique({
         where: {
