@@ -48,18 +48,20 @@ const MainNav: FC<MainNavProps> = ({ }) => {
                             pathName === '/services' ? 'bg-primary-foreground' : 'bg-none')
                     }
                 >
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <div className='absolute inset-0 flex items-center justify-center'>
-                                    <HandCoins className={cn(pathName === '/services' ? 'text-primary' : '')} />
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className='mt-3'>
-                                Services
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <Link href='/services'>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className='absolute inset-0 flex items-center justify-center'>
+                                        <HandCoins className={cn(pathName === '/services' ? 'text-primary' : '')} />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className='mt-3'>
+                                    Services
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </Link>
                 </li>
 
                 {/* login */}
