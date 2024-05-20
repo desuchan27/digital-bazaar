@@ -47,7 +47,7 @@ export default function Home() {
       {!session.user && <div className="relative h-screen">
         <AspectRatio ratio={16 / 10} className='h-screen flex flex-col justify-center items-center space-y-4 overflow-hidden'>
           <div className="landing-bg h-full w-full absolute z-0  scale-125 " />
-          <div className="relative z-50 w-full h-screen">
+          <div className="relative z-10 w-full h-screen">
             <Container>
               <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
                 <h1 className='font-bold text-4xl md:text-7xl text-center'>Your Gateway <br />to the Digital <br />Art Realm.</h1>

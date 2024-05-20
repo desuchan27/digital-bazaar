@@ -26,7 +26,7 @@ export default async function RootLayout({
     <html lang="en">
       <SessionProvider value={session}>
         <body className={`${inter.className} bg-primary`}>
-          <div className="min-h-screen">
+          <div className="min-h-screen ">
             <Toaster
               position='top-center'
             />

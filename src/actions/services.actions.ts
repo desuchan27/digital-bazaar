@@ -38,7 +38,8 @@ export const getUser = async (id: string) => {
             id
         },
         include: {
-            services: true
+            services: true,
+            artworks: true,
         }
     })
 

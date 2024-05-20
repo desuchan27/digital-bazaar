@@ -9,8 +9,7 @@ export const getArtworks = async () => {
         },
         orderBy: {
             createdAt: "desc"
-        },
-        take: 20
+        }
     })
 
     return {
