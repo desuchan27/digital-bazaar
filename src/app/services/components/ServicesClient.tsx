@@ -14,11 +14,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
 
-interface ServicesProps {
+interface ServicesClientProps {
     services: ServicesDb
 }
 
-const Services: FC<ServicesProps> = ({ }) => {
+const ServicesClient: FC<ServicesClientProps> = ({ }) => {
 
     const [services, setServices] = useState<ServiceWithUser[]>([]);
     const [searchTerm, setSearchTerm] = useState('')
@@ -53,17 +53,6 @@ const Services: FC<ServicesProps> = ({ }) => {
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     const totalPages = Math.ceil(filteredServices.length / itemsPerPage);
-    // const totalPages = Math.ceil(services.length / itemsPerPage);
-
-    // const sortedServices = [...filteredServices].sort((a, b) => {
-    //     if (sortOrder === 'asc') {
-    //         return a.startingPrice - b.startingPrice;
-    //     } else if (sortOrder === 'desc') {
-    //         return b.startingPrice - a.startingPrice;
-    //     } else {
-    //         return 0;
-    //     }
-    // });
 
 
     return (
@@ -96,7 +85,7 @@ const Services: FC<ServicesProps> = ({ }) => {
                     </div>
                 </ContentSection>
                 <ContentSection>
-                    <div className='h-full flex flex-col space-y-2 mx-auto mt-4'>
+                    <div className='min-h-[1000px] flex flex-col space-y-2 mx-auto mt-4'>
                         <div className='grid grid-cols-2 lg:grid-cols-5 gap-4'>
                             {sortedServices.map((service) => (
                                 <ServiceCard key={service.id} data={service} />
@@ -158,4 +147,4 @@ const Services: FC<ServicesProps> = ({ }) => {
     )
 }
 
-export default Services
+export default ServicesClient
