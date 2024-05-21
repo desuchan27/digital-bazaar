@@ -17,6 +17,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import ArtworkForm from './forms/ArtworkForm'
 import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
+import EditArtworkForm from './forms/EditArtworkForm'
 
 interface ProfileClientProps {
     name: string | null
@@ -269,43 +270,14 @@ const ProfileClient: FC<ProfileClientProps> = ({
             {/* artworks */}
             <ContentSection>
                 <h3 className='text-xl'>Artworks</h3>
-
-                {/* {artworks && artworks.length > 0 ? (<Carousel
-                    className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
-                >
-                    <CarouselContent>
-                        {artworks.map((artwork: Artwork) => (
-                            <CarouselItem key={artwork.id} className="md:basis-1/2 lg:basis-1/4">
-                                <Link href={`/artworks/${artwork.id}`}>
-                                    <div className='bg-primary/40 group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full'>
-                                        <div className='flex aspect-square items-center justify-center p-6 relative overflow-hidden bg-none'>
-                                            <Image src={artwork.imageUrl} fill objectFit='cover' alt={artwork.title} className='rounded-sm' />
-                                        </div>
-                                        <h4 className="mt-2 font-semibold">{artwork.title}</h4>
-                                        <p className='font-extralight text-slate-400'>₱ {artwork.startingPrice}</p>
-                                    </div>
-                                </Link>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious className='text-primary' />
-                    <CarouselNext className='text-primary' />
-                </Carousel>) : (
-                    <div className='flex flex-col items-center justify-center space-y-4 h-[400px]'>
-                        <h3 className='text-xl'>No artworks available</h3>
-                    </div>
-                )} */}
-
                 {artworks && artworks.length > 0 ? (
-
                     <div className="min-h-[1000px]">
                         <div className='grid grid-cols-2 gap-4 pt-4 md:grid-cols-4 lg:grid-cols-5 min-h-fit '>
                             {artworks.map((artwork: Artwork) => (
-                                <div key={artwork.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6 ">
+                                <div key={artwork.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6 relative">
                                     <Link
                                         href={`/artworks/${artwork.id}`}
                                         target='_blank'
-
                                     >
                                         <div className='bg-primary/40 group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full'>
                                             <div className='aspect-square bg-slate-100 relative overflow-hidden'>
@@ -321,6 +293,11 @@ const ProfileClient: FC<ProfileClientProps> = ({
                                             </div>
                                         </div>
                                     </Link>
+                                    {isCurrentUser && session ? (
+                                        <span className='absolute bottom-0 right-0 mb-2 mr-2 bg-[#8889DA] text-white font-bold py-2 px-4 rounded transition-opacity duration-200'>
+                                            <EditArtworkForm artworkData={artwork} servicesData={services} />
+                                        </span>
+                                    ) : ('')}
                                 </div>
                             ))}
                         </div>
