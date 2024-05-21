@@ -2,18 +2,24 @@ import { FC } from 'react'
 import ServicesClient from './components/ServicesClient'
 import Container from '@/components/layouts/web/Container'
 import { Services as ServicesDb } from '@prisma/client'
+import { db } from '@/lib/db'
 
-interface pageProps {
-    services: ServicesDb
-}
 
-const page: FC<pageProps> = ({
-    services
+
+const page = async ({
+
 }) => {
+
+    const getService = await db.services.findMany({
+        include: {
+            user: true
+        }
+    })
+
     return (
         <div className='py-[64px]'>
             <Container>
-                <ServicesClient services={services} />
+                <ServicesClient services={getService} />
             </Container>
         </div>
     )

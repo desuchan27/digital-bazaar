@@ -5,7 +5,6 @@ import ContentSection from '@/components/layouts/web/ContentSection'
 import Header from '@/components/ui/Header'
 import ServiceCard from '@/components/ui/cards/ServicesCard'
 import { useSession } from '@/lib/auth/SessionContext'
-import { Services as ServicesDb } from '@prisma/client'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 import { ServiceWithUser } from '@/types';
@@ -15,7 +14,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { cn } from '@/lib/utils'
 
 interface ServicesClientProps {
-    services: ServicesDb
+    services: ServiceWithUser[]
 }
 
 const ServicesClient: FC<ServicesClientProps> = ({ }) => {
