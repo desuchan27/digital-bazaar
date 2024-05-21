@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { loginUserSchema, registerUserSchema } from "@/schema";
 import { Argon2id } from 'oslo/password'
 import { lucia, validateRequest } from '@/auth'
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import { error } from 'console';
 import { cookies } from 'next/headers';

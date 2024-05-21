@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Container from '@/components/layouts/web/Container'
 import { Artwork } from '@prisma/client'
 import ArtworksClient from './components/ArtworksClient'
-import { db } from '@/lib/db'
+import db from '@/lib/db'
 
 const page = async () => {
 

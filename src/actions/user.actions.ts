@@ -3,7 +3,7 @@
 import { Argon2id } from 'oslo/password'
 import * as z from 'zod';
 import { artworkFormSchema, avatarFormSchema, bioFormSchema, serviceFormSchema, userSettingsSchema } from "@/schema";
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { validateRequest } from '@/auth';
 
 export const uploadAvatar = async (values: z.infer<typeof avatarFormSchema>) => {

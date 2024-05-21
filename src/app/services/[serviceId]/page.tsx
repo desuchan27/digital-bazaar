@@ -2,7 +2,7 @@
 import Container from '@/components/layouts/web/Container'
 import { FC } from 'react'
 import ServiceClient from './components/ServiceClient'
-import { db } from '@/lib/db'
+import db from '@/lib/db'
 
 interface pageProps {
     params: {

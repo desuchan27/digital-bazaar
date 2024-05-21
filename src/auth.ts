@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import { db } from "./lib/db";
+import db from "./lib/db";
 import { Lucia, Session, TimeSpan, User } from "lucia";
 import { UserType } from "@prisma/client";
 import { cache } from "react";

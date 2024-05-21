@@ -1,5 +1,5 @@
 import { validateRequest } from "@/auth";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 

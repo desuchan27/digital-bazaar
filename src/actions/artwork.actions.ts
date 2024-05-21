@@ -1,6 +1,6 @@
 "use server"
 
-import { db } from "@/lib/db"
+import db from "@/lib/db"
 
 export const getArtworks = async () => {
     const artworks = await db.artwork.findMany({

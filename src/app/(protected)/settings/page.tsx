@@ -3,7 +3,8 @@ import { FC } from 'react'
 import SettingsClient from './components/SettingsClient'
 import { User } from '@prisma/client'
 import { validateRequest } from '@/auth'
-import { db } from '@/lib/db'
+import db from '@/lib/db'
+
 
 // interface pageProps {
 //     // params: {

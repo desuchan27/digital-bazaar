@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import ProfileClient from './components/ProfileClient'
 import Container from '@/components/layouts/web/Container'
-import { db } from '@/lib/db'
+import db from '@/lib/db'
 import { validateRequest } from '@/auth'
 
 

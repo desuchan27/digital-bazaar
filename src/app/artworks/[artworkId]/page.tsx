@@ -1,7 +1,7 @@
 
 import Container from '@/components/layouts/web/Container'
 import { FC } from 'react'
-import { db } from '@/lib/db'
+import db from '@/lib/db'
 import ArtworkClient from './components/ArtworkClient'
 
 interface pageProps {
