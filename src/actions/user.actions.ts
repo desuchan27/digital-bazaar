@@ -1,5 +1,6 @@
 "use server"
 
+import { Argon2id } from 'oslo/password'
 import * as z from 'zod';
 import { artworkFormSchema, avatarFormSchema, bioFormSchema, serviceFormSchema, userSettingsSchema } from "@/schema";
 import { db } from '@/lib/db';
@@ -154,8 +155,7 @@ export const addArtwork = async (values: z.infer<typeof artworkFormSchema>) => {
 }
 
 export const editProfile = async (values: z.infer<typeof userSettingsSchema>) => {
-
-    const { name, username, bio, password, newPassword } = values
+    const { name, username, avatar, bio, password, newPassword, confirmNewPassword } = values
 
     const session = await validateRequest()
     const sessionId = session.user?.id
@@ -171,16 +171,48 @@ export const editProfile = async (values: z.infer<typeof userSettingsSchema>) =>
             error: 'Unauthorized'
         }
     } else {
+        const updatedData: any = {
+            name,
+            username,
+            image: avatar,
+            bio
+        }
+
+        if (typeof password !== 'string' || typeof newPassword !== 'string' || typeof confirmNewPassword !== 'string') {
+            return {
+                error: 'Invalid input'
+            }
+        }
+
+
+        if (newPassword) {
+            if (newPassword !== confirmNewPassword) {
+                return {
+                    error: 'New password does not match'
+                }
+            } else {
+
+                const validPassword = await new Argon2id().verify(existingUser.password, password)
+
+                if (validPassword) {
+                    const hashedPassword = await new Argon2id().hash(newPassword)
+                    updatedData.password = hashedPassword
+                } else {
+                    return {
+                        error: 'Password is incorrect'
+                    }
+                }
+            }
+        }
+
+
         await db.user.update({
             where: {
                 id: existingUser.id
             },
-            data: {
-                name,
-                username,
-                bio
-            }
+            data: updatedData
         })
+
         return {
             success: 'Profile updated successfully'
         }

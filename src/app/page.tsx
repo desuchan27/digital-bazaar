@@ -1,116 +1,277 @@
 "use client"
 
 import { getArtworks, getAuthor } from "@/actions/artwork.actions";
+import { getServices } from "@/actions/services.actions";
 import Homepage from "@/components/clientPages/Homepage";
 import Container from "@/components/layouts/web/Container";
 import ContentSection from "@/components/layouts/web/ContentSection";
+import ArtworkCard from "@/components/ui/cards/ArtworkCard";
+import Header from "@/components/ui/Header";
+import ServiceCard from "@/components/ui/cards/ServicesCard";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useSession } from "@/lib/auth/SessionContext";
-import { Artwork, User, UserType } from "@prisma/client";
+import { ServiceWithUser } from "@/types";
+import { Artwork, Services, User, UserType } from "@prisma/client";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import FeaturedArtistCard from "@/components/ui/cards/FeaturedArtistCard";
+import { getArtist, getArtists } from "@/actions/artist.actions";
+import FeaturedSection from "@/components/layouts/web/FeaturedSection";
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 
 interface ArtworkWithUser extends Artwork {
   user: User;
 }
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 25;
 
 export default function Home() {
+
+  const highlightArtists = ['clw65a0yh0000wyepqjmft5d4', 'clwck2z2i0000llk5of5dpurg', 'clwfufq5h00001f5bz27mxvja', 'clwg4ub5s000012658p63aogl']
+  const [artists, setArtists] = useState<User[]>([
+
+  ]);
+  const [sortOrder, setSortOrder] = useState('none');
   const [artworks, setArtworks] = useState<ArtworkWithUser[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [services, setServices] = useState<ServiceWithUser[]>([]);
+  const [userType, setUserType] = useState<UserType[]>([]);
+
+  const [artworkCurrentPage, setArtworkCurrentPage] = useState(1);
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay()])
+
+
 
   const session = useSession();
 
-  const totalPages = Math.ceil(artworks.length / ITEMS_PER_PAGE);
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
 
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
+  const fetchArtistById = async (id: string) => {
+    const result = await getArtist(id)
+    return result;
+  }
+
+  const fetchArtworks = useCallback(async () => {
+    const result = await getArtworks();
+    setArtworks(result.artworks);
+  }, [setArtworks]);
+
+  const fetchServices = useCallback(async () => {
+    const result = await getServices();
+    setServices(result.services);
+  }, [setServices]);
+
+  const fetchArtists = useCallback(async () => {
+    const result = await getArtists()
+    setArtists(result.users)
+  }, [setArtists])
+
 
   useEffect(() => {
-    const fetchArtworks = async () => {
-      const result = await getArtworks();
-      setArtworks(result.artworks);
-    };
     fetchArtworks();
+  }, [fetchArtworks]);
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
+
+  useEffect(() => {
+    fetchArtists()
+  }, [fetchArtists])
+
+  useEffect(() => {
+    const fetchArtists = async () => {
+      const artists = [];
+      for (const id of highlightArtists) {
+        const result = await getArtist(id);
+        if (result.user) {
+          const { artworks, services, ...user } = result.user;
+          artists.push(user);
+        }
+      }
+      setArtists(artists);
+    };
+
+    fetchArtists();
   }, []);
 
-  // console.log(session)
   return (
     <div >
-      {!session.user && <div className="relative h-screen">
-        <AspectRatio ratio={16 / 10} className='h-screen flex flex-col justify-center items-center space-y-4 overflow-hidden'>
-          <div className="landing-bg h-full w-full absolute z-0  scale-125 " />
-          <div className="relative z-10 w-full h-screen">
-            <Container>
-              <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
-                <h1 className='font-bold text-4xl md:text-7xl text-center'>Your Gateway <br />to the Digital <br />Art Realm.</h1>
-                <Button className='w-[30%] md:py-10 rounded-full md:text-2xl'>Explore</Button>
-              </div>
-            </Container>
-          </div>
-        </AspectRatio>
-      </div>}
+      <div className="w-full h-fit relative overflow-hidden py-[64px]">
+        <div className='h-[400px] w-[400px] md:h-[400px] md:w-[400px] xl:h-[700px] xl:w-[700px] absolute top-[25rem] xl:top-[40rem] left-[-15rem] bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
 
-      <div className="w-full h-screen bg-gradient-to-r relative overflow-hidden">
-        <div className='h-[400px] w-[400px] md:h-[350px] md:w-[350px] xl:h-[700px] xl:w-[700px] absolute top-[9rem] left-[-15rem] bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
-        <Container>
-          <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
-            <h2 className="text-xl font-bold">What&apos;s trending</h2>
-          </div>
-        </Container>
-      </div>
+        <div className='h-[400px] w-[400px] md:h-[400px] md:w-[400px] xl:h-[700px] xl:w-[700px] absolute top-[120rem] -right-[20rem] transform -translate-y-1/2 bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
 
-      <div className="w-full h-fit bg-gradient-to-r relative overflow-hidden py-[80px]">
-        <div className='h-[400px] w-[400px] md:h-[350px] md:w-[350px] xl:h-[700px] xl:w-[700px] absolute top-[9rem] left-[-15rem] bg-[#8889DA] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
-        <Container>
-          <ContentSection>
-            <div className="h-full flex flex-col items-center justify-center text-primary-foreground space-y-8 z-10 relative opacity">
-              <h2 className="text-xl font-bold">Recent Artworks from various artists</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {artworks
-                  .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
-                  .map((artwork) => (
-                    <div key={artwork.id} className='bg-primary background rounded-lg p-4'>
-                      <div className="relative w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] aspect-square ">
-                        <Image src={artwork.imageUrl} fill alt="test" objectFit='cover' className="rounded-sm" />
+        <div className='h-[400px] w-[400px] md:h-[400px] md:w-[400px] xl:h-[700px] xl:w-[700px] absolute bottom-0 left-0 bg-[#AAD9D9] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
+
+
+        {/* slides */}
+        <div className="w-full h-fill relative z-10">
+          <div className="aspect-[4/3] md:aspect-[16/4] relative overflow-hidden">
+            <div className="embla" ref={emblaRef}>
+              <div className="embla__container">
+                <div className="embla__slide">
+
+                  {/* welcome slide */}
+                  <div className="w-full h-full relative">
+                    <Image
+                      src="/images/landingpagebg.jpg"
+                      fill
+                      objectFit="cover"
+                      alt="artist of the year"
+                    />
+                    <Container>
+                      <h1 className="absolute font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-3xl md:text-5xl lg:text-7xl">
+                        Your Gateway
+                        to the Digital
+                        Art Realm.
+                      </h1>
+                    </Container>
+                  </div>
+                </div>
+                <div className="embla__slide">
+                  <div className="w-full h-full relative">
+                    <Image
+                      src="/images/artistOfTheMonthCover.svg"
+                      layout="fill"
+                      objectFit="cover"
+                      alt="artist of the year"
+                    />
+                    <Container>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center md:flex-row py-4">
+                        <div className="relative aspect-square rounded-md h-[200px] lg:h-[300px] overflow-hidden">
+                          <Image
+                            src="/images/artistOfTheMonth1.png"
+                            objectFit="cover"
+                            fill
+                            alt="artist of the year"
+                          />
+                        </div>
+                        <div className="ml-0 md:ml-4 space-y-1 text-center md:text-left">
+                          <p className="text-base md:text-xl">Artist of the month</p>
+                          <p className="font-bold text-2xl md:text-5xl lg:text-7xl">STEF SABADO</p>
+                          <p className="text-sm md:text-base w-[500px]">
+                            3D artist
+                          </p>
+                          {/* <div className="grid grid-cols-3">
+                            TODO if makaya: 3-illustration grid
+                          </div> */}
+                        </div>
                       </div>
-                      <h3 className='text-lg font-bold'>{artwork.title}</h3>
-                      <p>{artwork.user.name}</p>
-                      {/* <p>{artwork.description}</p> */}
-                      <p>₱ {artwork.startingPrice}</p>
-                    </div>
-                  ))}
-
-              </div>
-              <div className="flex flex-row w-full justify-between items-center px-2 py-4">
-                <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                  Previous
-                </Button>
-                <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                  Next
-                </Button>
+                    </Container>
+                  </div>
+                </div>
+                {/* <div className="embla__slide">Slide 3</div> */}
               </div>
             </div>
-          </ContentSection>
-        </Container>
-      </div>
+            {/* <Carousel ref={emblaRef}>
+              <CarouselContent>
+                <CarouselItem className="aspect-[4/3] md:aspect-[16/4] relative overflow-hidden">
+                  <Image
+                    src="/images/artistOfTheYearCover.svg"
+                    fill
+                    objectFit="cover"
+                    alt="artist of the year"
+                  />
+                </CarouselItem>
+                <CarouselItem className="aspect-[4/3] md:aspect-[16/4] relative overflow-hidden">
+                  <Image
+                    src="/images/landingpagebg.jpg"
+                    fill
+                    objectFit="cover"
+                    alt="artist of the year"
+                  />
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel> */}
+          </div>
+        </div>
 
-      <div className="w-full h-screen bg-gradient-to-r relative overflow-hidden ">
-        <div className='h-[400px] w-[400px] md:h-[350px] md:w-[350px] xl:h-[700px] xl:w-[700px] absolute top-[10rem] right-[-15rem] bg-[#AAD9D9] opacity-50 flex items-center justify-center flex-col rounded-full blur-[100px] z-0' />
         <Container>
-          <div className="h-screen flex flex-col items-center justify-center text-primary-foreground space-y-8">
-            TODO: featured artist section
+          <div className="flex flex-col items-center mb-2 justify-center text-primary-foreground space-y-4">
+            <FeaturedSection>
+              <h2 className="text-xl font-bold text-center">Weekly Artists</h2>
+              <div className='hidden md:grid grid-cols-2 gap-4 md:grid-cols-4 '>
+                {artists
+                  .filter(artist => highlightArtists.includes(artist.id))
+                  .map((artist, index) => (
+                    <FeaturedArtistCard key={index} data={artist} />
+                  ))}
+              </div>
+
+            </FeaturedSection>
+            <div className="md:hidden">
+              <Carousel>
+                <CarouselContent>
+                  {artists
+                    .filter(artist => highlightArtists.includes(artist.id))
+                    .map((artist, index) => (
+                      <CarouselItem
+                        key={index}
+                        className="basis-1/3"
+                      >
+                        <FeaturedArtistCard data={artist} />
+                      </CarouselItem>
+                    ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
           </div>
         </Container>
-      </div>
-    </div>
+
+        {/* <div className=""> */}
+        <Container>
+          {/* recent services grid */}
+          <div className="space-y-4 z-10 relative">
+            <ContentSection>
+              <div className="space-y-4 ">
+                <Header title="Recent Services" />
+                <div className="min-h-screen">
+                  <div className='grid grid-cols-2 gap-4 pt-4 md:grid-cols-4 lg:grid-cols-5 '>
+                    {services.map((service) => (
+                      <ServiceCard
+                        key={service.id}
+                        data={service}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <Link
+                  href={`/services`}
+                  className='text-white text-sm flex flex-row items-center justify-end hover:text-[#8889DA] md:text-base'
+                >See More <ChevronRight className='ml-2' size={25} /></Link>
+              </div>
+            </ContentSection>
+            {/* recent artworks grid */}
+            <ContentSection>
+              <div className="space-y-4">
+                <Header title="Recent Artworks" />
+                <div className="min-h-screen">
+                  <div className='grid grid-cols-2 gap-4 pt-4 md:grid-cols-4 lg:grid-cols-5 min-h-fit '>
+                    {artworks.map((artwork) => (
+                      <ArtworkCard
+                        key={artwork.id}
+                        data={artwork} />
+                    ))}
+                  </div>
+                </div>
+                <Link
+                  href={`/services`}
+                  className='text-white text-sm flex flex-row items-center justify-end hover:text-[#8889DA] md:text-base py-4'
+                >See More <ChevronRight className='ml-2' size={25} /></Link>
+              </div>
+            </ContentSection>
+          </div>
+        </Container>
+        {/* </div> */}
+
+      </div >
+
+    </div >
 
   );
 }

@@ -57,9 +57,9 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ }) => {
     }
 
     return (
-        <div className='w-screen h-3/4 rounded-lg overflow-hidden flex flex-row shadow-2xl bg-primary bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-indigo-500 via-indigo-300 to-indigo-100'>
+        <div className='w-screen h-5/6  rounded-lg overflow-hidden flex flex-col-reverse shadow-2xl bg-primary bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-indigo-500 via-indigo-300 to-indigo-100 lg:flex-row lg:h-3/4'>
 
-            <div className='h-full w-2/5 bg-primary-foreground flex items-center justify-center flex-col'>
+            <div className='h-full bg-primary-foreground flex items-center justify-center flex-col w-full lg:w-2/5'>
                 <h1 className='text-xl font-semibold text-left'>Sign-up</h1>
                 <Form {...form}>
                     <form
@@ -183,13 +183,16 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ }) => {
 
                 </Form>
             </div>
-            <div className='h-full w-3/5 flex justify-start text-primary'>
-                <div className='flex flex-col items-start justify-center ml-4'>
-                    <h1 className='text-9xl font-semibold '>
-                        Digital <br /> Bazaaar
+            <div className='h-full hidden justify-start text-primary w-full lg:w-3/5 lg:flex'>
+                <div className='flex flex-col items-center justify-center lg:ml-4'>
+                    <h1 className='textl-4xl lg:text-9xl font-semibold '>
+                        <span className='hidden lg:block'>Digital <br /> Bazaaar</span>
+                        <span className='block lg:hidden'>Digital Bazaaar</span>
                     </h1>
-                    <h1 className='font-semibold text-2xl ml-2 text-balance'>
-                        Dive into Artistry: Your Online Hub <br />for Art Commissions
+                    <h1 className='font-semibold ml-2 text-balance lg:text-2xl'>
+                        Your Gateway
+                        to the Digital
+                        Art Realm.
                     </h1>
                 </div>
             </div>

@@ -117,40 +117,6 @@ const EditProfileForm: FC<EditProfileFormProps> = ({ userData }) => {
                                     <FormMessage />
                                 </FormItem>
                             )} />
-
-                        <FormField
-                            control={form.control}
-                            name='password'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder='******'
-                                            type='password'
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )} />
-
-                        <FormField
-                            control={form.control}
-                            name='newPassword'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Confirm password</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder='******'
-                                            type='password'
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )} />
                         <Button type='submit'>Save Changes</Button>
                     </form>
                 </Form>

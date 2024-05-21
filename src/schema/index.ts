@@ -36,8 +36,10 @@ export const userSettingsSchema = z.object({
     bio: z.string().max(100, {
         message: 'Characters cannot exceed over 100'
     }).optional(),
+    avatar: z.string().optional(),
     password: z.string().optional(),
     newPassword: z.string().optional(),
+    confirmNewPassword: z.string().optional(),
 })
 
 export const bioFormSchema = z.object({

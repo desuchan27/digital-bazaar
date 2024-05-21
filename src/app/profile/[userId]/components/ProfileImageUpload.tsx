@@ -54,7 +54,7 @@ const ProfileImageUpload: FC<ProfileImageUploadProps> = () => {
         <Dialog>
             <DialogTrigger className="w-full h-full">Upload Avatar</DialogTrigger>
             <DialogContent className='flex flex-col overflow-auto'>
-                <DialogHeader>Add your avatar</DialogHeader>
+                <DialogHeader>New Avatar</DialogHeader>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -80,7 +80,7 @@ const ProfileImageUpload: FC<ProfileImageUploadProps> = () => {
                                             form.setValue('imageUrl', uploadedUrl);
                                             const fileName = uploadedFile.name;
                                             setUploadedFileName(fileName);
-                                            onSubmit({ imageUrl: uploadedUrl });
+                                            form.handleSubmit(onSubmit)();
                                             alert(`Upload Completed. File name: ${fileName}`);
                                         } else {
                                             alert("No files uploaded.");
@@ -90,16 +90,24 @@ const ProfileImageUpload: FC<ProfileImageUploadProps> = () => {
                                         alert(`ERROR! ${error.message}`);
                                     }}
                                 />
+                                {uploadedFileName && (
+                                    <div className="mt-4 w-full flex flex-col items-center justify-center space-y-2">
+                                        <div className="h-full w-full flex items-center justify-center">
+                                            <div className="aspect-square w-[300px] h-[300px] overflow-hidden relative">
+                                                <Image
+                                                    src={uploadedImageUrl || 'defaultImageUrl'}
+                                                    alt="Uploaded Image"
+                                                    fill
+                                                    objectFit='cover'
+                                                    className='rounded-full'
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className='text-xs'>Uploaded file: {uploadedFileName}</p>
+                                    </div>
+                                )}
                             </div>
                         </FormItem>
-                        {uploadedFileName && (
-                            <div className="mt-4 w-full flex flex-col items-center justify-center">
-                                <p className='text-xs'>Uploaded file: {uploadedFileName}</p>
-                                <div className="h-full w-full flex items-center justify-center">
-                                    <Image src={uploadedImageUrl || 'defaultImageUrl'} alt="Uploaded Image" width={300} height={300} objectFit='cover' className='rounded-full' />
-                                </div>
-                            </div>
-                        )}
                         <Button onClick={close}>Save</Button>
                     </form>
                 </Form>

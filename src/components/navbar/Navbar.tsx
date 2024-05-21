@@ -19,7 +19,7 @@ const Navbar: FC<NavbarProps> = ({ }) => {
                     <Link href='/'>
                         <h2 className='font-semibold'>Digital Bazaaar</h2>
                     </Link>
-                    <div className='hidden md:flex'>
+                    <div>
                         <MainNav />
                     </div>
                 </div>

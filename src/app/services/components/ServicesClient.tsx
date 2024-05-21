@@ -3,7 +3,7 @@
 import { getServices } from '@/actions/services.actions'
 import ContentSection from '@/components/layouts/web/ContentSection'
 import Header from '@/components/ui/Header'
-import ServiceCard from '@/components/ui/ServicesCard'
+import ServiceCard from '@/components/ui/cards/ServicesCard'
 import { useSession } from '@/lib/auth/SessionContext'
 import { Services as ServicesDb } from '@prisma/client'
 import Image from 'next/image'

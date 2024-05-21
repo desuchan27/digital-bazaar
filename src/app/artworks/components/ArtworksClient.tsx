@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils'
 import { Artwork } from '@prisma/client'
 import { ArtworkWithUser } from '@/types'
 import { getArtworks } from '@/actions/artwork.actions'
-import ArtworkCard from '@/components/ui/ArtworkCard'
+import ArtworkCard from '@/components/ui/cards/ArtworkCard'
 
 interface ArtworksClientProps {
     artworks: Artwork[]

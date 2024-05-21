@@ -1,6 +1,6 @@
 "use client"
 
-import { HandCoins, LinkIcon, LogIn, LogOutIcon, SettingsIcon, SquareArrowUp, SquareArrowUpRight, User, UserIcon } from 'lucide-react'
+import { BookImage, HandCoins, LinkIcon, LogIn, LogOutIcon, SettingsIcon, SquareArrowUp, SquareArrowUpRight, User, UserIcon, UserRoundIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
@@ -41,7 +41,6 @@ const MainNav: FC<MainNavProps> = ({ }) => {
             <ul className='flex flex-row space-x-4'>
 
                 {/* services */}
-
                 <li
                     className={
                         cn('w-[35px] h-[35px] flex items-center justify-center rounded-sm relative ',
@@ -64,9 +63,31 @@ const MainNav: FC<MainNavProps> = ({ }) => {
                     </Link>
                 </li>
 
+
+                {/* Artworks */}
+                <li
+                    className={
+                        cn('w-[35px] h-[35px] flex items-center justify-center rounded-sm relative ',
+                            pathName === '/artworks' ? 'bg-primary-foreground' : 'bg-none')
+                    }
+                >
+                    <Link href='/artworks'>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className='absolute inset-0 flex items-center justify-center'>
+                                        <BookImage className={cn(pathName === '/artworks' ? 'text-primary' : '')} />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent className='mt-3'>
+                                    Artworks
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </Link>
+                </li>
                 {/* login */}
                 {!session.user ? (
-
                     <li
                         className={
                             cn('w-[35px] h-[35px] flex items-center justify-center rounded-sm relative',
@@ -78,7 +99,7 @@ const MainNav: FC<MainNavProps> = ({ }) => {
                                 <Tooltip>
                                     <TooltipTrigger>
                                         <div className='absolute inset-0 flex items-center justify-center'>
-                                            <LogIn className={cn(pathName === '/login' ? 'text-primary' : '')} />
+                                            <UserIcon className={cn(pathName === '/login' ? 'text-primary' : '')} />
                                         </div>
                                     </TooltipTrigger>
                                     <TooltipContent className='mt-3'>

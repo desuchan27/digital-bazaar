@@ -8,8 +8,8 @@ const Header: FC<HeaderProps> = ({
     title
 }) => {
     return (
-        <div>
-            <h1 className='text-xl text-primary-foreground'>{title}</h1>
+        <div className='px-4 py-4 mx-auto'>
+            <h1 className='text-xl text-primary-foreground font-bold text-center'>{title}</h1>
         </div>
     )
 }

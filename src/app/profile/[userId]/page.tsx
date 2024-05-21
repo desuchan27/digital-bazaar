@@ -11,8 +11,8 @@ const page = async ({ params }: {
     }
 }) => {
 
-    const session = await validateRequest()
-    const sessionId = session.user?.id
+    // const session = await validateRequest()
+    // const sessionId = session.user?.id
 
     const getUser = await db.user.findUnique({
         where: {
