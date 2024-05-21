@@ -17,6 +17,21 @@ export const getArtworks = async () => {
     }
 }
 
+export const getArtwork = async (id: string) => {
+    const artworks = await db.artwork.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            user: true,
+        }
+    })
+
+    return {
+        artworks
+    }
+}
+
 export const getAuthor = async (id: string) => {
     const author = await db.user.findUnique({
         where: {
