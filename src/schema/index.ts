@@ -37,6 +37,9 @@ export const userSettingsSchema = z.object({
         message: 'Characters cannot exceed over 100'
     }).optional(),
     avatar: z.string().optional(),
+    facebookLink: z.string().optional(),
+    instagramLink: z.string().optional(),
+    gmailLink: z.string().optional(),
     password: z.string().optional(),
     newPassword: z.string().optional(),
     confirmNewPassword: z.string().optional(),

@@ -41,6 +41,9 @@ const SettingsClient: FC<SettingsClientProps> = ({
             username: userData.username || '',
             avatar: userData.image || '',
             bio: userData.bio || '',
+            facebookLink: userData.facebookLink || '',
+            instagramLink: userData.instagramLink || '',
+            gmailLink: userData.gmailLink || '',
             password: '',
             newPassword: '',
             confirmNewPassword: ''
@@ -48,6 +51,9 @@ const SettingsClient: FC<SettingsClientProps> = ({
             name: '',
             username: '',
             bio: '',
+            facebookLink: '',
+            instagramLink: '',
+            gmailLink: '',
             password: '',
             newPassword: '',
             confirmNewPassword: ''
@@ -177,6 +183,53 @@ const SettingsClient: FC<SettingsClientProps> = ({
                                                     {...field}
                                                     placeholder='******'
                                                     type='password'
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )} />
+                                <Separator />
+                                <h2 className='font-semibold'>Contact Links</h2>
+                                <FormField
+                                    control={form.control}
+                                    name='facebookLink'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>facebook</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    placeholder='https://facebook.com/username'
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )} />
+                                <FormField
+                                    control={form.control}
+                                    name='instagramLink'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>instagram</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    placeholder='https://instagram.com/username'
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )} />
+                                <FormField
+                                    control={form.control}
+                                    name='gmailLink'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>instagram</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    placeholder='youremail@gmail.com'
                                                 />
                                             </FormControl>
                                             <FormMessage />

@@ -237,7 +237,7 @@ export const editService = async (values: z.infer<typeof serviceFormSchema>, ser
 }
 
 export const editProfile = async (values: z.infer<typeof userSettingsSchema>) => {
-    const { name, username, avatar, bio, password, newPassword, confirmNewPassword } = values
+    const { name, username, avatar, bio, facebookLink, instagramLink, gmailLink, password, newPassword, confirmNewPassword } = values
 
     const session = await validateRequest()
     const sessionId = session.user?.id
@@ -256,6 +256,9 @@ export const editProfile = async (values: z.infer<typeof userSettingsSchema>) =>
         const updatedData: any = {
             name,
             username,
+            facebookLink,
+            instagramLink,
+            gmailLink,
             image: avatar,
             bio
         }

@@ -22,6 +22,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FC } from 'react'
+import InterestedButton from '@/components/InterestedButton'
 
 interface ServiceClientProps {
     // name: string | null
@@ -110,11 +111,11 @@ const ServiceClient: FC<ServiceClientProps> = ({
                             {/* web */}
                             <div className="space-y-2 hidden md:block">
                                 <p className='mx-auto text-md font-extralight md:text-xl'>Starts at: <span className='font-semibold text-orange-300'>₱ {serviceData?.startingPrice}</span></p>
-                                <Button className='bg-[#8889DA] rounded-full'><Sparkles size={20} className='mr-2' /> Interested!</Button>
+                                <InterestedButton userData={userData} />
                             </div>
                             <div className="space-y-2 w-full flex flex-col md:hidden">
                                 <p className='mx-auto text-md font-extralight md:text-xl'>Starts at: <span className='font-semibold text-orange-300'>₱ {serviceData?.startingPrice}</span></p>
-                                <Button className='bg-[#8889DA] rounded-full'><Sparkles size={20} className='mr-2' /> Interested!</Button>
+                                <InterestedButton userData={userData} />
                             </div>
                         </div>
                     </div>

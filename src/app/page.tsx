@@ -1,6 +1,6 @@
 "use client"
 
-import { getArtworks, getAuthor } from "@/actions/artwork.actions";
+import { getArtworks } from "@/actions/artwork.actions";
 import { getServices } from "@/actions/services.actions";
 import Homepage from "@/components/clientPages/Homepage";
 import Container from "@/components/layouts/web/Container";

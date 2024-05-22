@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import Container from '../layouts/web/Container'
 import MainNav from './MainNav'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface NavbarProps {
 
@@ -17,7 +18,15 @@ const Navbar: FC<NavbarProps> = ({ }) => {
             <Container>
                 <div className='text-primary-foreground flex flex-row w-full items-center justify-between h-[64px] px-4'>
                     <Link href='/'>
-                        <h2 className='font-semibold'>Digital Bazaaar</h2>
+                        <div className='relative h-[50px] w-[50px] overflow-hidden'>
+                            <Image
+                                src='/images/dblogo2png.png'
+                                alt='logo'
+                                fill
+                                objectFit='cover'
+                            />
+
+                        </div>
                     </Link>
                     <div>
                         <MainNav />

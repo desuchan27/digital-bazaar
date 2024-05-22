@@ -19,6 +19,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
 import EditArtworkForm from './forms/EditArtworkForm'
 import EditServiceForm from './forms/EditServiceForm'
+import ContactButton from '@/components/ContactButton'
 
 interface ProfileClientProps {
     name: string | null
@@ -112,7 +113,7 @@ const ProfileClient: FC<ProfileClientProps> = ({
                             )
                         ) : (
                             <div>
-                                <Button className='px-4 py-1 rounded-full bg-[#8889DA]'>Contact</Button>
+                                <ContactButton userData={userData} />
                             </div>
                         )}
 
