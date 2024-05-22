@@ -93,3 +93,10 @@ export const editArtworkFormSchema = z.object({
     imageUrl: z.string().optional(),
     startingPrice: z.coerce.number().optional(),
 })
+
+export const editServiceFormSchema = z.object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+    thumbnail: z.string().optional(),
+    startingPrice: z.coerce.number().optional(),
+})

@@ -18,6 +18,7 @@ import ArtworkForm from './forms/ArtworkForm'
 import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
 import EditArtworkForm from './forms/EditArtworkForm'
+import EditServiceForm from './forms/EditServiceForm'
 
 interface ProfileClientProps {
     name: string | null
@@ -227,39 +228,41 @@ const ProfileClient: FC<ProfileClientProps> = ({
             </ProfileSection>
 
             {/* Services */}
+            {/* Services */}
             <ContentSection>
                 <h3 className='text-xl'>Services</h3>
-                {services && services.length > 0 ? (<Carousel
-                    className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4"
-                >
-                    <CarouselContent>
-                        {services.map((service: Services) => (
-                            <CarouselItem key={service.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6 ">
-                                <Link
-                                    href={`/services/${service.id}`}
-                                    target='_blank'
-
-                                >
-                                    <div className='bg-primary/40 group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full'>
-                                        <div className='aspect-square bg-slate-100 relative overflow-hidden'>
-                                            <Image src={service.thumbnail} fill objectFit='cover' alt={service.name} className='aspect-square object-cover' />
-                                        </div>
-                                        <div className='px-2 py-2'>
-                                            <h4 className="mt-2 font-semibold">
-                                                {service.name}
-                                            </h4>
-                                            <p className='font-extralight text-slate-400'>
-                                                ₱ {service.startingPrice}
-                                            </p>
-                                        </div>
+                {services && services.length > 0 ? (
+                    <Carousel className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4">
+                        <CarouselContent>
+                            {services.map((service: Services) => (
+                                <CarouselItem key={service.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6">
+                                    <div className='group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full bg-primary/40 pb-2'>
+                                        <Link href={`/services/${service.id}`} target='_blank'>
+                                            <div className='aspect-square bg-slate-100 relative overflow-hidden'>
+                                                <Image src={service.thumbnail} fill objectFit='cover' alt={service.name} className='aspect-square object-cover' />
+                                            </div>
+                                            <div className='px-2 py-2'>
+                                                <h4 className="mt-2 font-semibold">
+                                                    {service.name}
+                                                </h4>
+                                                <p className='font-extralight text-slate-400'>
+                                                    ₱ {service.startingPrice}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                        {isCurrentUser && session && (
+                                            <div className="px-2">
+                                                <EditServiceForm serviceData={service} />
+                                            </div>
+                                        )}
                                     </div>
-                                </Link>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious className='text-primary' />
-                    <CarouselNext className='text-primary' />
-                </Carousel>) : (
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <CarouselPrevious className='text-primary' />
+                        <CarouselNext className='text-primary' />
+                    </Carousel>
+                ) : (
                     <div className='flex flex-col items-center justify-center space-y-4 h-[400px]'>
                         <h3 className='text-xl'>No services available</h3>
                     </div>

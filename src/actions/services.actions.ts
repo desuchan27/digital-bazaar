@@ -32,6 +32,8 @@ export const getService = async (id: string) => {
     }
 }
 
+
+
 export const getUser = async (id: string) => {
     const user = await db.user.findUnique({
         where: {

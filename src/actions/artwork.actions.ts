@@ -32,14 +32,14 @@ export const getArtwork = async (id: string) => {
     }
 }
 
-export const getAuthor = async (id: string) => {
-    const author = await db.user.findUnique({
-        where: {
-            id
-        }
-    })
+// export const getAuthor = async (id: string) => {
+//     const author = await db.user.findUnique({
+//         where: {
+//             id
+//         }
+//     })
 
-    return {
-        author
-    }
-}
+//     return {
+//         author
+//     }
+// }
