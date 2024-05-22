@@ -154,6 +154,47 @@ export const addArtwork = async (values: z.infer<typeof artworkFormSchema>) => {
     }
 }
 
+export const editArtwork = async (values: z.infer<typeof artworkFormSchema>, artworkId: string) => {
+    const { title, serviceId, description, imageUrl, startingPrice } = values
+    const session = await validateRequest()
+
+    const sessionId = session.user?.id
+
+    const existingUser = await db.user.findFirst({
+        where: {
+            id: sessionId
+        }
+    })
+
+    if (sessionId !== existingUser?.id) {
+        return {
+            error: 'Unauthorized'
+        }
+    }
+
+    if (!existingUser) {
+        return {
+            error: 'Unauthorized'
+        }
+    } else {
+        await db.artwork.update({
+            where: {
+                id: artworkId
+            },
+            data: {
+                title,
+                serviceId,
+                startingPrice,
+                description,
+                imageUrl
+            }
+        })
+        return {
+            success: 'Artwork updated successfully'
+        }
+    }
+}
+
 export const editProfile = async (values: z.infer<typeof userSettingsSchema>) => {
     const { name, username, avatar, bio, password, newPassword, confirmNewPassword } = values
 
