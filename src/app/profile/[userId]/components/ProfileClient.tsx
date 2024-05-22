@@ -272,14 +272,14 @@ const ProfileClient: FC<ProfileClientProps> = ({
                 <h3 className='text-xl'>Artworks</h3>
                 {artworks && artworks.length > 0 ? (
                     <div className="min-h-[1000px]">
-                        <div className='grid grid-cols-2 gap-4 pt-4 md:grid-cols-4 lg:grid-cols-5 min-h-fit '>
+                        <div className='grid grid-cols-2 gap-4 pt-4 md:grid-cols-4 lg:grid-cols-5 min-h-fit'>
                             {artworks.map((artwork: Artwork) => (
-                                <div key={artwork.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6 relative">
-                                    <Link
-                                        href={`/artworks/${artwork.id}`}
-                                        target='_blank'
-                                    >
-                                        <div className='bg-primary/40 group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full'>
+                                <div key={artwork.id} className="basis-1/3 md:basis-1/4 lg:basis-1/6 relative ">
+                                    <div className=' group cursor-pointer rounded-lg shadow-sm border border-transparent hover:border-white transition-all duration-200 overflow-hidden text-primary-foreground h-full pb-4 bg-primary/40 '>
+                                        <Link
+                                            href={`/artworks/${artwork.id}`}
+                                            target='_blank'
+                                        >
                                             <div className='aspect-square bg-slate-100 relative overflow-hidden'>
                                                 <Image src={artwork.imageUrl} fill objectFit='cover' alt={artwork.title} className='aspect-square object-cover' />
                                             </div>
@@ -291,13 +291,13 @@ const ProfileClient: FC<ProfileClientProps> = ({
                                                     ₱ {artwork.startingPrice}
                                                 </p>
                                             </div>
-                                        </div>
-                                    </Link>
-                                    {isCurrentUser && session ? (
-                                        <span className='absolute bottom-0 right-0 mb-2 mr-2 bg-[#8889DA] text-white font-bold py-2 px-4 rounded transition-opacity duration-200'>
-                                            <EditArtworkForm artworkData={artwork} servicesData={services} />
-                                        </span>
-                                    ) : ('')}
+                                        </Link>
+                                        {isCurrentUser && session ? (
+                                            <div className="px-2">
+                                                <EditArtworkForm artworkData={artwork} servicesData={services} />
+                                            </div>
+                                        ) : ('')}
+                                    </div>
                                 </div>
                             ))}
                         </div>
