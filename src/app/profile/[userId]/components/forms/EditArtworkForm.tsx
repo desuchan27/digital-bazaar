@@ -2,9 +2,9 @@ import * as z from 'zod'
 import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { artworkFormSchema } from '@/schema'
+import { artworkFormSchema, editArtworkFormSchema } from '@/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { addArtwork } from '@/actions/user.actions'
+import { addArtwork, editArtwork } from '@/actions/user.actions'
 import toast from 'react-hot-toast'
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { DialogTrigger } from '@radix-ui/react-dialog'
@@ -34,13 +34,13 @@ const EditArtworkForm: FC<EditArtworkFormProps> = ({
     const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
     const form = useForm<z.infer<typeof artworkFormSchema>>({
-        resolver: zodResolver(artworkFormSchema),
+        resolver: zodResolver(editArtworkFormSchema),
         defaultValues: artworkData ? {
             title: artworkData?.title || '',
             serviceId: artworkData?.serviceId || '',
             description: artworkData?.description || '',
-            imageUrl: uploadedImageUrl || '', // Default value is an empty string
-            startingPrice: 0
+            imageUrl: uploadedImageUrl || artworkData?.imageUrl || '', // Use existing artwork's image URL when no new image is uploaded
+            startingPrice: artworkData?.startingPrice || 0
         } : {
             title: '',
             serviceId: '',
@@ -53,10 +53,11 @@ const EditArtworkForm: FC<EditArtworkFormProps> = ({
 
 
     const onSubmit = (values: z.infer<typeof artworkFormSchema>) => {
-        addArtwork(values).then((data) => {
+        editArtwork(values, artworkData?.id).then((data) => {
             if (data?.error) {
                 form.reset()
                 toast.error(data.error)
+                console.log(data.error)
             } else {
                 toast.success('Artwork added successfully!')
                 setIsOpen(false)
@@ -73,7 +74,7 @@ const EditArtworkForm: FC<EditArtworkFormProps> = ({
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger className='px-4 py-1 rounded-full bg-[#8889DA]'>
                 <p className="flex flex-row justify-center items-center">
-                    <Edit size={20} className='mr-2' />
+                    <Edit size={20} className='mr-2' /> Edit
                 </p>
             </DialogTrigger>
             <DialogContent className='md:max-w-4xl overflow-auto'>
@@ -93,13 +94,23 @@ const EditArtworkForm: FC<EditArtworkFormProps> = ({
                                             fill
                                             objectFit='cover'
                                             className='rounded-sm'
-                                        />) : (
-                                        <div className='w-full h-[250px] border rounded-sm flex flex-col items-center justify-center'>
-                                            <PaletteIcon size={100} className='text-slate-500 mb-4' />
-                                            your artwork image here
-                                        </div>
-                                    )
-                                    }
+                                        />
+                                    ) : (
+                                        artworkData?.imageUrl ? (
+                                            <Image
+                                                src={artworkData?.imageUrl || ''}
+                                                alt='uploaded image'
+                                                fill
+                                                objectFit='cover'
+                                                className='rounded-sm'
+                                            />
+                                        ) : (
+                                            <div className='w-full h-[250px] border rounded-sm flex flex-col items-center justify-center'>
+                                                <PaletteIcon size={100} className='text-slate-500 mb-4' />
+                                                your artwork image here
+                                            </div>
+                                        )
+                                    )}
                                 </div>
 
                                 <UploadButton
