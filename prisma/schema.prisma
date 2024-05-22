@@ -35,6 +35,9 @@ model User {
   number String?
   bio String?
   image String?
+  facebookLink String?
+  instagramLink String?
+  gmailLink String?
 
   type     UserType
   artworks Artwork[]
