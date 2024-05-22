@@ -85,3 +85,11 @@ export const artworkFormSchema = z.object({
         message: 'Price is required'
     }),
 })
+
+export const editArtworkFormSchema = z.object({
+    title: z.string().optional(),
+    serviceId: z.string().optional(),
+    description: z.string().optional(),
+    imageUrl: z.string().optional(),
+    startingPrice: z.coerce.number().optional(),
+})
