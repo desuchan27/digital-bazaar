@@ -13,6 +13,7 @@ import { uploadAvatar } from '@/actions/user.actions';
 import { UploadButton } from '@/utils/uploadthing';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { ImageDown, ImagePlusIcon } from 'lucide-react';
 
 interface ProfileImageUploadProps { }
 
@@ -52,7 +53,7 @@ const ProfileImageUpload: FC<ProfileImageUploadProps> = () => {
 
     return (
         <Dialog>
-            <DialogTrigger className="w-full h-full">Upload Avatar</DialogTrigger>
+            <DialogTrigger className="w-full h-full"><ImagePlusIcon className='mx-auto my-auto' /></DialogTrigger>
             <DialogContent className='flex flex-col overflow-auto'>
                 <DialogHeader>New Avatar</DialogHeader>
                 <Form {...form}>
