@@ -50,6 +50,7 @@ const ProfileClient: FC<ProfileClientProps> = ({
     const pathName = usePathname()
     const session = useSession()
     const isCurrentUser = session?.user?.name === name
+    const isCurrentUserCustomer = userData?.type === "ARTIST"
 
     console.log(session)
 
@@ -230,7 +231,7 @@ const ProfileClient: FC<ProfileClientProps> = ({
 
             {/* Services */}
             {/* Services */}
-            <ContentSection>
+            {isCurrentUserCustomer && <ContentSection>
                 <h3 className='text-xl'>Services</h3>
                 {services && services.length > 0 ? (
                     <Carousel className="w-full max-w-sm md:max-w-2xl xl:max-w-6xl mx-auto mt-4">
@@ -268,11 +269,11 @@ const ProfileClient: FC<ProfileClientProps> = ({
                         <h3 className='text-xl'>No services available</h3>
                     </div>
                 )}
-            </ContentSection>
+            </ContentSection>}
 
 
             {/* artworks */}
-            <ContentSection>
+            {isCurrentUserCustomer && <ContentSection>
                 <h3 className='text-xl'>Artworks</h3>
                 {artworks && artworks.length > 0 ? (
                     <div className="min-h-[1000px]">
@@ -311,7 +312,7 @@ const ProfileClient: FC<ProfileClientProps> = ({
                         <h3 className='text-xl'>No artworks available</h3>
                     </div>
                 )}
-            </ContentSection>
+            </ContentSection>}
         </div >
     )
 }
